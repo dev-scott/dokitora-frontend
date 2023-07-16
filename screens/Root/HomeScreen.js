@@ -119,6 +119,30 @@ const HomeScreen = () => {
     });
   }
 
+
+  function sendPushNotificationHandler(){
+
+    fetch('https://exp.host/--/api/v2/push/send', {
+
+    method:'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body:JSON.stringify({
+      to:'ExponentPushToken[IVtRiGH43dN9YcNsLRcYuR]',
+      title:'Test - set from a device',
+      body:'This is a test !'
+    })
+
+
+    })
+
+    
+
+
+
+  }
+
   return (
     <SafeAreaView className=" flex-1  bg-primary pt-[32px] px-[16px] pb-8">
       <View className="flex w-full    flex-row items-center justify-between">
@@ -153,10 +177,19 @@ const HomeScreen = () => {
       <View className=" w-full mt-4 h-10 p-3 bg-white bg-opacity-20 rounded-3xl  "></View>
 
       <MainButton
-        text="Demmarer avec Dokitor"
+      style="mt-[20px]"
+        text="Try local notification"
         color="#808080"
         icon="LogoIcon"
         onPress={scheduleNotificationHandler}
+        iconName="arrow-right"
+      ></MainButton>
+      <MainButton
+      style="mt-[20px]"
+        text="Try push notification"
+        color="#808080"
+        icon="LogoIcon"
+        onPress={sendPushNotificationHandler}
         iconName="arrow-right"
       ></MainButton>
     </SafeAreaView>
