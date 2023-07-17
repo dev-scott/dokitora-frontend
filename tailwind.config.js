@@ -28,6 +28,7 @@ module.exports = {
       indigo50:"#F0EEFD",
       indigo500:"#A599F2",
       indigo600:"#4B33E5 ",
+      indigo1:"rgba(75, 51, 229, 0.26)",
       zin900:"#191919",
       zin800:"#494949",
       zin500:"#828282",

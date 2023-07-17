@@ -52,6 +52,7 @@ function updateInputValueHandler(inputType, enteredValue) {
 
     const phone  = enteredPhone;
 
+    authCtx.phone = enteredPhone
 
     const phoneValid = phone
 

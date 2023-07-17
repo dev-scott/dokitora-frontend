@@ -7,24 +7,28 @@ import {
   Image,
   Alert,
 } from "react-native";
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { assets } from "../../constants";
 import MainButton from "../../components/UI/MainButton";
 import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 
 import MainInput from "../../components/UI/MainInput";
-import { forgotPassword, resetPassword, verifyAccount } from "../../utils/auth";
+import { forgotPassword, resentOtp, resetPassword, verifyAccount } from "../../utils/auth";
 import LoadingOverlay from "../../components/UI/LoadingOverlay";
 import { AuthContext } from "../../store/AuthContext";
 
 const OtpVerification = ({ navigation }) => {
+
+
+
+
   const firstInput = useRef();
   const secondInput = useRef();
   const thirdInput = useRef();
   const fourthInput = useRef();
   const [otp, setOtp] = useState({ 1: "", 2: "", 3: "", 4: "" });
-  const [myOtp , setMyOtp] = useState("")
+  const [myOtp, setMyOtp] = useState("");
 
   const LogoIcon = assets.LogoIcon;
 
@@ -37,6 +41,59 @@ const OtpVerification = ({ navigation }) => {
   const [enteredEmail, setEnteredEmail] = useState("");
   const [entereUsername, setEnteredUsername] = useState("");
   const [isAuthenticating, setIsAuthenticating] = useState(false);
+
+  const [countdown, setCountdown] = useState(60);
+
+
+  // const [isLocked , setIsLocked] = useState(false);
+
+
+  // const [timereset , setTimeReset]=useState("30000")
+
+  // const handlePress = ()=>{
+
+  //   setInterval(() => {
+
+  //     setTimeReset(timereset - 1000)
+
+
+  //     return () => clearInterval(timer);
+      
+  //   }, 1000);
+
+  //   if(!isLocked){
+  //     setIsLocked(true);
+
+  //     setTimeout(()=>{
+
+  //       setIsLocked(false);
+
+  //     },timereset)
+
+  //   }
+
+
+  // }
+
+
+
+  useEffect(() => {
+    let timer;
+
+    if (countdown > 0) {
+      timer = setInterval(() => {
+        setCountdown((prevCount) => prevCount - 1); // Décrémente le compte à rebours chaque seconde
+      }, 1000);
+    }
+
+    return () => clearInterval(timer); // Nettoyage du minuteur lorsqu'il n'est plus nécessaire
+
+  }, [countdown]);
+
+
+
+
+
 
   function updateInputValueHandler(inputType, enteredValue) {
     switch (inputType) {
@@ -58,33 +115,31 @@ const OtpVerification = ({ navigation }) => {
     let otpCode = "";
 
     for (let key of keys) {
-      otpCode+= otp[key];
+      otpCode += otp[key];
     }
 
     // setOtp(otpCode)
     setMyOtp(otpCode);
-     console.log(myOtp);
+    console.log(myOtp);
 
     if (!otp) {
       Alert.alert("Invalid input", "Please check your entered credentials.");
-      
 
       return;
     }
 
-
     // console.log(otpCode)
     // authCtx.email = enteredEmail;
 
-    verifyOtp( {myOtp} );
+    verifyOtp({ myOtp });
   }
 
-  async function verifyOtp( {myOtp} ) {
+  async function verifyOtp({ myOtp }) {
     setIsAuthenticating(true);
-    console.log(myOtp)
+    console.log(myOtp);
 
     try {
-       await verifyAccount(myOtp);
+      await verifyAccount(myOtp);
 
       // console.log(response);
 
@@ -96,6 +151,48 @@ const OtpVerification = ({ navigation }) => {
 
       setIsAuthenticating(false);
     }
+  }
+
+
+  function submitResentOtp(){
+
+
+      const phone = authCtx.phone
+
+      console.log(phone)
+  
+      updateUptCode({ phone });
+  
+
+    }
+
+
+  
+
+  async function updateUptCode ({phone}){
+
+
+    setIsAuthenticating(true);
+
+    try{
+
+      await resentOtp(phone);
+
+      setIsAuthenticating(false);
+
+    }
+
+    catch(error){
+
+      Alert.alert("Resent otp failed");
+
+
+      setIsAuthenticating(false);
+
+      
+    }
+    
+
   }
 
   if (isAuthenticating) {
@@ -204,7 +301,10 @@ const OtpVerification = ({ navigation }) => {
         </MainInput> */}
       </View>
 
-      <View className="mt-[64px] mx-auto   w-full h-[92px] p-3 bg-pink bg-opacity-95 rounded-2xl   flex flex-col justify-around items-end    ">
+<Pressable onPress={submitResentOtp} disabled={countdown > 0} >
+
+
+      <View className="mt-[64px] mx-auto   w-full h-[92px] p-3 bg-indigo1 bg-opacity-95 rounded-2xl   flex flex-col justify-around items-end    ">
         <View className="w-full flex justify-between items-center flex-row ">
           <Question />
 
@@ -217,10 +317,14 @@ const OtpVerification = ({ navigation }) => {
           <Retry />
           <Text className="text-black text-xs font-normal ">
             {" "}
-            Réessayer (1:59){" "}
+            Réessayer ({countdown}){" "}
           </Text>
         </View>
       </View>
+
+
+</Pressable>
+
 
       <MainButton
         text="Verifier mon compte"
