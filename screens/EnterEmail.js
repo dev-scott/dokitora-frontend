@@ -6,8 +6,11 @@ import {
   SafeAreaView,
   ScrollView,
   KeyboardAvoidingView,
+  Animated,
 } from "react-native";
-import React, { useContext, useState } from "react";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+
+import React, { useContext, useRef, useState } from "react";
 import { assets } from "../constants";
 import { Input } from "native-base";
 import { useNavigation } from "@react-navigation/native";
@@ -67,84 +70,78 @@ const EnterEmail = () => {
     navigation.navigate("EmailRegistration");
   }
 
+  const scrollViewRef = useRef();
+
+  const handleScroll = () => {
+    // Définir l'animation pour faire défiler vers le haut
+    Animated.timing(
+      scrollViewRef.current.scrollTo({ y: 0, animated: true })
+    ).start();
+  };
+
   return (
     <SafeAreaView className=" px-[16px] flex-1 flex justify-between ">
-     
-     <KeyboardAvoidingView
-        className="flex-1"
-        // enabled
-        // behavior={"padding"}
-        // className=" flex-1 w-full h-full"
+      <KeyboardAwareScrollView
+        behavior={Platform.OS === "ios" ? "padding" : null}
+        enableOnAndroid
+        extraHeight={Platform.select({ android: 300 })} // Ajustez cette valeur en fonction de vos besoins
+        style={{ flex: 1 }}
       >
-        <ScrollView
-          className="flex-1"
-          pagingEnabled
-          showsHorizontalScrollIndicator={true}
+        <View className=" mb-[160px] mt-[42px] flex  w-full h-auto flex-row items-center justify-between ">
+          <LogoIcon width={19} height={32} />
+        </View>
+        <View>
+          <Text className="mb-[16px] text-zin900 text-[32px] font-normal leading-10">
+            Quel est votre email ? {entereUsername}
+          </Text>
+          <Text className="text-zin800 text-opacity-80 text-[16px] font-normal leading-normal">
+            Nous avons besoin de votre email pour créer votre compte.{" "}
+          </Text>
+        </View>
 
-          contentInsetAdjustmentBehavior="always"
-          overScrollMode="always"
-
-        >
-     
-     
-      <View className=" mb-[160px] mt-[42px] flex  w-full h-auto flex-row items-center justify-between ">
-        <LogoIcon width={19} height={32} />
-      </View>
-      <View>
-        <Text className="mb-[16px] text-zin900 text-[32px] font-normal leading-10">
-          Quel est votre email ? {entereUsername}
-        </Text>
-        <Text className="text-zin800 text-opacity-80 text-[16px] font-normal leading-normal">
-          Nous avons besoin de votre email pour créer votre compte.{" "}
-        </Text>
-      </View>
-
-
-          <View className="mt-[32px]">
+        <View className="mt-[32px]">
+          <MainInput
+            textInputConfig={{
+              keyboardType: "default",
+              placeholder: "Quelle est votre nom ?",
+              // value: "Quelle est ",
+            }}
+            onUpdateValue={updateInputValueHandler.bind(this, "username")}
+          >
+            <Person />
+          </MainInput>
+          <View className="mt-[16px]">
             <MainInput
               textInputConfig={{
                 keyboardType: "default",
-                placeholder: "Quelle est votre nom ?",
+                placeholder: "Quelle est votre email ?",
                 // value: "Quelle est ",
               }}
-              onUpdateValue={updateInputValueHandler.bind(this, "username")}
+              onUpdateValue={updateInputValueHandler.bind(this, "email")}
             >
-              <Person />
+              <Email />
             </MainInput>
-            <View className="mt-[16px]">
-              <MainInput
-                textInputConfig={{
-                  keyboardType: "default",
-                  placeholder: "Quelle est votre email ?",
-                  // value: "Quelle est ",
-                }}
-                onUpdateValue={updateInputValueHandler.bind(this, "email")}
-              >
-                <Email />
-              </MainInput>
-            </View>
-
-            <Text className="font-normal text-zin800 text-[12px] leading-none mt-[64px] mb-[64px]  ">
-              Ces informations, ainsi que les données personnelles que vous
-              partagerez avec nous resterons confidentiels selon l’avis de
-              confidentialité de Dokitora.
-            </Text>
           </View>
 
-          <MainButton
-        
-            text="Continuer"
-            color="primary"
-            icon="LogoIcon"
-            iconName="phone"
-            colorIcon="primary"
-            onPress={submitEmail}
-            style="mb-[35px]"
-          >
-            <AntDesign name="arrowright" size={24} color="#4B33E5" />
-          </MainButton>
-        </ScrollView>
-      </KeyboardAvoidingView>
+          <Text className="font-normal text-zin800 text-[12px] leading-none mt-[64px] mb-[64px]  ">
+            Ces informations, ainsi que les données personnelles que vous
+            partagerez avec nous resterons confidentiels selon l’avis de
+            confidentialité de Dokitora.
+          </Text>
+        </View>
+
+        <MainButton
+          text="Continuer"
+          color="primary"
+          icon="LogoIcon"
+          iconName="phone"
+          colorIcon="primary"
+          onPress={submitEmail}
+          style="mb-[35px]"
+        >
+          <AntDesign name="arrowright" size={24} color="#4B33E5" />
+        </MainButton>
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   );
 };

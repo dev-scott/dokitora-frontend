@@ -1,21 +1,21 @@
 import axios from "axios";
 
-const urlRegister = "http://192.168.108.18:1337/api/auth/local/register";
-const urlLogin = " http://192.168.108.18:1337/api/auth/local";
+const urlRegister = "http://192.168.112.18:1337/api/auth/local/register";
+const urlLogin = " http://192.168.112.18:1337/api/auth/local";
 
-const urlReset = "http://192.168.108.18:1337/api/auth/forgot-password";
+const urlReset = "http://192.168.112.18:1337/api/auth/forgot-password";
 
-const urlForgotPassword = "http://192.168.108.18:1337/api/auth/forgot-password";
+const urlForgotPassword = "http://192.168.112.18:1337/api/auth/forgot-password";
 
-const urlResetPassword = "http://192.168.108.18:1337/api/auth/reset-password";
+const urlResetPassword = "http://192.168.112.18:1337/api/auth/reset-password";
 
-const urlRegisterWithPhoneAndOTP ="http://192.168.108.18:1337/api/auth/registerUserWithOtp";
+const urlRegisterWithPhoneAndOTP ="http://192.168.112.18:1337/api/auth/registerUserWithOtp";
 
-const urlVerifyAccount = "http://192.168.108.18:1337/api/auth/verifyAccount";
+const urlVerifyAccount = "http://192.168.112.18:1337/api/auth/verifyAccount";
 
-const urlUpdateAccount = "http://192.168.108.18:1337/api/auth/updateAccount";
+const urlUpdateAccount = "http://192.168.112.18:1337/api/auth/updateAccount";
 
-const urlResentOtp = "http://192.168.108.18:1337/api/auth/updateUserOtp"
+const urlResentOtp = "http://192.168.112.18:1337/api/auth/updateUserOtp"
 
 export async function createUser(username, email , date , password) {
   console.log(username, email, password);

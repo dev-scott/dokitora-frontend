@@ -37,6 +37,8 @@ module.exports = {
       orange: "#ff7849",
       green: "#13ce66",
       yellow: "#ffc82c",
+      slate950:"#01001F",
+      white20:"rgba(255, 255, 255, 0.2)",
       "gray-dark": "#273444",
       gray: "#8492a6",
       "gray-light": "#d3dce6",
