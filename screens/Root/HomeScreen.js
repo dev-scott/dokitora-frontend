@@ -1,4 +1,11 @@
-import { View, SafeAreaView, Text, Alert, Platform } from "react-native";
+import {
+  View,
+  SafeAreaView,
+  Text,
+  Alert,
+  Platform,
+  Pressable,
+} from "react-native";
 import React, { useContext, useEffect } from "react";
 import { assets } from "../../constants";
 import { TouchableOpacity } from "react-native";
@@ -6,8 +13,22 @@ import { useNavigation } from "@react-navigation/native";
 import { AuthContext } from "../../store/AuthContext";
 import MainButton from "../../components/UI/MainButton";
 import * as Notifications from "expo-notifications";
+import data from "../../utils/data";
+import Card from "../../components/UI/Card";
+
+import {
+  Directions,
+  Gesture,
+  GestureDetector,
+  GestureHandlerRootView,
+} from "react-native-gesture-handler";
+import { useSharedValue, withTiming } from "react-native-reanimated";
 
 const Profil = assets.Profil;
+
+const LogoIcon = assets.LogoIcon;
+
+const Bell = assets.Bell;
 
 Notifications.setNotificationHandler({
   handleNotification: async () => {
@@ -19,7 +40,41 @@ Notifications.setNotificationHandler({
   },
 });
 
+const maxVisibleItems = 6;
+
+const duration = 300;
+
 const HomeScreen = () => {
+  const activeIndex = useSharedValue(0);
+
+  const flingUp = Gesture.Fling()
+    .direction(Directions.UP)
+    .onStart(() => {
+
+      if(activeIndex.value == 0){
+        return 
+      }
+
+      activeIndex.value = withTiming(activeIndex.value - 1 , {duration})
+
+      console.log("fling up");
+    });
+
+  const flingDown = Gesture.Fling()
+    .direction(Directions.DOWN)
+    .onStart(() => {
+      console.log("fling down");
+
+      if (activeIndex.value == data.length ){
+
+        return;
+
+      }
+
+      activeIndex.value = withTiming(activeIndex.value + 1 , {duration})
+
+    });
+
   useEffect(() => {
     async function configurePushNotifications() {
       const { status } = await Notifications.getPermissionsAsync();
@@ -39,22 +94,20 @@ const HomeScreen = () => {
         return;
       }
 
-      const pushTokenData = await Notifications.getExpoPushTokenAsync({projectId: 'ba564e9b-fe1e-4b24-9fac-13eb619fb567'});
+      const pushTokenData = await Notifications.getExpoPushTokenAsync({
+        projectId: "ba564e9b-fe1e-4b24-9fac-13eb619fb567",
+      });
       console.log(pushTokenData);
 
-      if(Platform.OS === "android"){
-
-        Notifications.setNotificationChannelAsync('default', {
-          name:'default',
-          importance:Notifications.AndroidImportance.DEFAULT
-        } )
-
+      if (Platform.OS === "android") {
+        Notifications.setNotificationChannelAsync("default", {
+          name: "default",
+          importance: Notifications.AndroidImportance.DEFAULT,
+        });
       }
-
     }
 
     configurePushNotifications();
-
   }, []);
 
   useEffect(() => {
@@ -90,20 +143,9 @@ const HomeScreen = () => {
     authCtx.logout();
   }
 
-  // useEffect(()=>{
-
-  //   const username = AuCtx.username
-
-  //   console.log(username)
-
-  // },[])
-
   const username = authCtx.username;
 
   const token = authCtx.token;
-
-  // console.log(token);
-  // console.log("scott")
 
   function scheduleNotificationHandler() {
     Notifications.scheduleNotificationAsync({
@@ -119,80 +161,83 @@ const HomeScreen = () => {
     });
   }
 
-
-  function sendPushNotificationHandler(){
-
-    fetch('https://exp.host/--/api/v2/push/send', {
-
-    method:'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body:JSON.stringify({
-      to:'ExponentPushToken[IVtRiGH43dN9YcNsLRcYuR]',
-      title:'Test - set from a device',
-      body:'This is a test !'
-    })
-
-
-    })
-
-    
-
-
-
+  function sendPushNotificationHandler() {
+    fetch("https://exp.host/--/api/v2/push/send", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        to: "ExponentPushToken[IVtRiGH43dN9YcNsLRcYuR]",
+        title: "Test - set from a device",
+        body: "This is a test !",
+      }),
+    });
   }
 
   return (
-    <SafeAreaView className=" flex-1  bg-primary pt-[32px] px-[16px] pb-8">
-      <View className="flex w-full    flex-row items-center justify-between">
-        <TouchableOpacity onPress={submitLogout}>
-          <Text className="text-white text-2xl font-semibold">Dokitora </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={openDrawer}>
-          <Profil />
-        </TouchableOpacity>
-      </View>
-
-      <View className="mt-[34px]">
-        <Text
-          style={{
-            fontFamily: "sharp-sans",
-          }}
-          className="text-white text-base font-medium"
+      <GestureDetector gesture={Gesture.Exclusive(flingUp, flingDown)} >
+        <SafeAreaView
+          className="bg-slate950 flex-1 relative px-[16px] pt-[44px] pb-8 "
+          pointerEvents="box-none"
         >
-          Bonjour {username}
-        </Text>
-        <Text
-          style={{
-            fontFamily: "sharp-sans",
-          }}
-          className="mt-[5px] text-white font-2xl font-semibold leading-loose "
-        >
-          Qu’est ce qu’on vous livre aujourd’hui ?
-        </Text>
-      </View>
+          <View className="flex w-full items-center justify-between flex-row ">
+            <Pressable onPress={submitLogout} >
 
-      <View className=" w-full mt-4 h-10 p-3 bg-white bg-opacity-20 rounded-3xl  "></View>
+            <LogoIcon color="white" />
+            </Pressable>
 
-      <MainButton
-      style="mt-[20px]"
-        text="Try local notification"
-        color="#808080"
-        icon="LogoIcon"
-        onPress={scheduleNotificationHandler}
-        iconName="arrow-right"
-      ></MainButton>
-      <MainButton
-      style="mt-[20px]"
-        text="Try push notification"
-        color="#808080"
-        icon="LogoIcon"
-        onPress={sendPushNotificationHandler}
-        iconName="arrow-right"
-      ></MainButton>
-    </SafeAreaView>
+            <Pressable className="  w-[183px] h-10  bg-white20  flex flex-row items-center   px-[12px] py-[12px]    rounded-3xl">
+              <Bell />
+
+              <Text className=" text-white text-xs font-normal ">
+                {" "}
+                Vous avez +9 notifications{" "}
+              </Text>
+            </Pressable>
+            <Pressable onPress={openDrawer}>
+              <Profil className="" />
+            </Pressable>
+          </View>
+
+          <View className="mt-[50px]">
+            <Text className="text-white text-opacity-80 text-base font-normal">
+              Bonjour {username}
+            </Text>
+            <Text className="text-white text-[28px] font-semibold leading-[37.80px] mt-[24px] ">
+              Comment allez-vous aujourd’hui ?{" "}
+            </Text>
+            <View className="flex gap-x-3 justify-start items-start flex-row  mt-[24px] ">
+              <Pressable className="bg-white20  flex flex-row items-center justify-start  p-1 rounded-3xl">
+                <Text className="text-xl">😊</Text>
+              </Pressable>
+              <Pressable className="bg-white20  flex flex-row items-center justify-start  p-1 rounded-3xl">
+                <Text className="text-xl">😰</Text>
+              </Pressable>
+              <Pressable className="bg-white20  flex flex-row items-center justify-start  p-1 rounded-3xl">
+                <Text className="text-xl">😒</Text>
+              </Pressable>
+              <Pressable className="bg-white20  flex flex-row items-center justify-start  p-1 rounded-3xl">
+                <Text className="text-xl">🤧</Text>
+              </Pressable>
+            </View>
+          </View>
+
+          <View className=" flex flex-1 justify-end items-center mt-[50px] ">
+            {data.map((c, index) => {
+              return (
+                <Card
+                  info={c}
+                  key={c.id}
+                  index={index}
+                  activeIndex = {activeIndex}
+                  totalLength={data.length - 1}
+                />
+              );
+            })}
+          </View>
+        </SafeAreaView>
+      </GestureDetector>
   );
 };
 

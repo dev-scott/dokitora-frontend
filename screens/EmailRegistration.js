@@ -15,6 +15,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import DatePicker from "react-native-modern-datepicker";
 import MainButton from "../components/UI/MainButton";
 
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import {
   Button,
@@ -148,6 +149,15 @@ const EmailRegistration = ({navigation}) => {
 
   return (
     <SafeAreaView className=" px-[16px] flex-1">
+
+<KeyboardAwareScrollView
+        behavior={Platform.OS === "ios" ? "padding" : null}
+        enableOnAndroid
+        extraHeight={Platform.select({ android: 200 })} // Ajustez cette valeur en fonction de vos besoins
+        style={{ flex: 1 }}
+      >
+
+
       <View className="  flex  w-full h-auto flex-row items-center justify-between pt-[42px]">
         <Pressable onPress={()=>navigation.goBack()} >
           <ArrowLeft />
@@ -323,6 +333,7 @@ const EmailRegistration = ({navigation}) => {
 
 
 
+      </KeyboardAwareScrollView>
 
 
 

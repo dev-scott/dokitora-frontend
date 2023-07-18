@@ -18,6 +18,7 @@ import ArrowLeft from "../assets/icons/ArrowLeft.svg"
 import Question from "../assets/icons/Question.svg"
 import Retry from "../assets/icons/Retry.svg"
 import Profil from "../assets/icons/Profil.svg"
+import Bell from "../assets/icons/Bell_pin.svg"
 
 export default  {
   ArrowRight: require("../assets/icons/ArrowRight.png"),
@@ -41,6 +42,7 @@ export default  {
   Question,
   Retry,
   Profil,
+  Bell,
   PersonOnboading41:require("../assets/images/PersonOnboading4.png"),
   PersonOnboading21:require("../assets/images/PersonOnboading2.png"),
 
