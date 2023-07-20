@@ -19,6 +19,11 @@ import Question from "../assets/icons/Question.svg"
 import Retry from "../assets/icons/Retry.svg"
 import Profil from "../assets/icons/Profil.svg"
 import Bell from "../assets/icons/Bell_pin.svg"
+import Buy from "../assets/icons/Buy.svg"
+import HeadPhone from "../assets/icons/Headphone.svg"
+import Message from "../assets/icons/Message.svg"
+import Search from "../assets/icons/Search.svg"
+
 
 export default  {
   ArrowRight: require("../assets/icons/ArrowRight.png"),
@@ -43,6 +48,10 @@ export default  {
   Retry,
   Profil,
   Bell,
+  Buy,
+  HeadPhone,
+  Message,
+  Search,
   PersonOnboading41:require("../assets/images/PersonOnboading4.png"),
   PersonOnboading21:require("../assets/images/PersonOnboading2.png"),
 

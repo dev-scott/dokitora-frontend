@@ -6,7 +6,7 @@ import {
   Platform,
   Pressable,
 } from "react-native";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { assets } from "../../constants";
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -44,20 +44,27 @@ const maxVisibleItems = 6;
 
 const duration = 300;
 
+
 const HomeScreen = () => {
+
+  const [valueForCard , setValueForCard] = useState("")
+
   const activeIndex = useSharedValue(0);
+
+  console.log("2");
 
   const flingUp = Gesture.Fling()
     .direction(Directions.UP)
     .onStart(() => {
+      console.log(activeIndex.value);
 
-      if(activeIndex.value == 0){
-        return 
+      if (activeIndex.value == 0) {
+        return;
       }
 
-      activeIndex.value = withTiming(activeIndex.value - 1 , {duration})
-
-      console.log("fling up");
+      activeIndex.value = withTiming(activeIndex.value - 1, { duration });
+      // setValueForCard(activeIndex.value)
+      // console.log(valueForCard);
     });
 
   const flingDown = Gesture.Fling()
@@ -65,14 +72,15 @@ const HomeScreen = () => {
     .onStart(() => {
       console.log("fling down");
 
-      if (activeIndex.value == data.length ){
+      if (activeIndex.value == data.length - 1) {
+        console.log("avant dernier , peux plus swiper");
 
         return;
-
       }
 
-      activeIndex.value = withTiming(activeIndex.value + 1 , {duration})
-
+      activeIndex.value = withTiming(activeIndex.value + 1, { duration });
+      // setValueForCard(activeIndex.value)
+      // console.log(valueForCard);
     });
 
   useEffect(() => {
@@ -176,68 +184,67 @@ const HomeScreen = () => {
   }
 
   return (
-      <GestureDetector gesture={Gesture.Exclusive(flingUp, flingDown)} >
-        <SafeAreaView
-          className="bg-slate950 flex-1 relative px-[16px] pt-[44px] pb-8 "
-          pointerEvents="box-none"
-        >
-          <View className="flex w-full items-center justify-between flex-row ">
-            <Pressable onPress={submitLogout} >
-
+    <GestureDetector gesture={Gesture.Exclusive(flingUp, flingDown)}>
+      <SafeAreaView
+        className="bg-slate950 flex-1 relative px-[16px] pt-[44px] pb-8 "
+        pointerEvents="box-none"
+      >
+        <View className="flex w-full items-center justify-between flex-row ">
+          <Pressable onPress={submitLogout}>
             <LogoIcon color="white" />
-            </Pressable>
+          </Pressable>
 
-            <Pressable className="  w-[183px] h-10  bg-white20  flex flex-row items-center   px-[12px] py-[12px]    rounded-3xl">
-              <Bell />
+          <Pressable className="  w-[183px] h-10  bg-white20  flex flex-row items-center   px-[12px] py-[12px]    rounded-3xl">
+            <Bell />
 
-              <Text className=" text-white text-xs font-normal ">
-                {" "}
-                Vous avez +9 notifications{" "}
-              </Text>
-            </Pressable>
-            <Pressable onPress={openDrawer}>
-              <Profil className="" />
-            </Pressable>
-          </View>
-
-          <View className="mt-[50px]">
-            <Text className="text-white text-opacity-80 text-base font-normal">
-              Bonjour {username}
+            <Text className=" text-white text-xs font-normal ">
+              {" "}
+              Vous avez +9 notifications{" "}
             </Text>
-            <Text className="text-white text-[28px] font-semibold leading-[37.80px] mt-[24px] ">
-              Comment allez-vous aujourd’hui ?{" "}
-            </Text>
-            <View className="flex gap-x-3 justify-start items-start flex-row  mt-[24px] ">
-              <Pressable className="bg-white20  flex flex-row items-center justify-start  p-1 rounded-3xl">
-                <Text className="text-xl">😊</Text>
-              </Pressable>
-              <Pressable className="bg-white20  flex flex-row items-center justify-start  p-1 rounded-3xl">
-                <Text className="text-xl">😰</Text>
-              </Pressable>
-              <Pressable className="bg-white20  flex flex-row items-center justify-start  p-1 rounded-3xl">
-                <Text className="text-xl">😒</Text>
-              </Pressable>
-              <Pressable className="bg-white20  flex flex-row items-center justify-start  p-1 rounded-3xl">
-                <Text className="text-xl">🤧</Text>
-              </Pressable>
-            </View>
-          </View>
+          </Pressable>
+          <Pressable onPress={openDrawer}>
+            <Profil className="" />
+          </Pressable>
+        </View>
 
-          <View className=" flex flex-1 justify-end items-center mt-[50px] ">
-            {data.map((c, index) => {
-              return (
-                <Card
-                  info={c}
-                  key={c.id}
-                  index={index}
-                  activeIndex = {activeIndex}
-                  totalLength={data.length - 1}
-                />
-              );
-            })}
+        <View className="mt-[50px]">
+          <Text className="text-white text-opacity-80 text-base font-normal">
+            Bonjour {username}
+          </Text>
+          <Text className="text-white text-[28px] font-semibold leading-[37.80px] mt-[24px] ">
+            Comment allez-vous aujourd’hui ?{" "}
+          </Text>
+          <View className="flex gap-x-3 justify-start items-start flex-row  mt-[24px] ">
+            <Pressable className="bg-white20  flex flex-row items-center justify-start  p-1 rounded-3xl">
+              <Text className="text-xl">😊</Text>
+            </Pressable>
+            <Pressable className="bg-white20  flex flex-row items-center justify-start  p-1 rounded-3xl">
+              <Text className="text-xl">😰</Text>
+            </Pressable>
+            <Pressable className="bg-white20  flex flex-row items-center justify-start  p-1 rounded-3xl">
+              <Text className="text-xl">😒</Text>
+            </Pressable>
+            <Pressable className="bg-white20  flex flex-row items-center justify-start  p-1 rounded-3xl">
+              <Text className="text-xl">🤧</Text>
+            </Pressable>
           </View>
-        </SafeAreaView>
-      </GestureDetector>
+        </View>
+
+        <View className=" flex flex-1  items-center mt-[50px] ">
+          {data.map((c, index) => {
+            return (
+              <Card
+                info={c}
+                key={c.id}
+                index={index}
+                activeIndex={activeIndex}
+                totalLength={data.length - 1}
+              />
+            );
+          })}
+        </View>
+      </SafeAreaView>
+    </GestureDetector>
   );
 };
 
