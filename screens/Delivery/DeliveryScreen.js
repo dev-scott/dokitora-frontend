@@ -1,5 +1,5 @@
-import { View, Text, SafeAreaView, TouchableOpacity, Image } from "react-native";
-import React from "react";
+import { View, Text, SafeAreaView, TouchableOpacity, Platform, Image, Linking } from "react-native";
+import React, { useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { featured } from "../../constants/dummyData";
 import MapView, { Marker } from "react-native-maps";
@@ -7,6 +7,9 @@ import * as Icon from "react-native-feather";
 import { useDispatch, useSelector } from "react-redux";
 import { selectpharmacy } from "../../slices/pharmacySlice";
 import { emptyCart } from "../../slices/cartSlice";
+import * as Notifications from "expo-notifications";
+
+
 
 const DeliveryScreen = () => {
   const pharmacy = useSelector(selectpharmacy)
@@ -18,6 +21,19 @@ const dispatch  = useDispatch()
     dispatch(emptyCart());
     navigation.navigate('HomeScreen')
   }
+
+
+
+const makePhoneCall = ()=>{
+  if(Platform.OS==="android"){
+    Linking.openURL("tel:657704439")
+  }else{
+    Linking.openURL("tel:657704439")
+  }
+}
+
+  
+
 
   return (
     <SafeAreaView
@@ -71,8 +87,8 @@ const dispatch  = useDispatch()
                 <Text className="text-white font-semibold">Your Rider</Text>
             </View>
             <View  className="flex-row items-center space-x-3 mr-3">
-              <TouchableOpacity className="bg-white p-2 rounded-full">
-                <Icon.Phone  strokeWidth="1" />
+              <TouchableOpacity onPress={makePhoneCall} className="bg-white p-2 rounded-full">
+                <Icon.Phone stroke={'red'}  strokeWidth="1" />
               </TouchableOpacity>
               
               <TouchableOpacity onPress={handleCancel}  className="bg-white p-2 rounded-full">

@@ -6,13 +6,14 @@ import {
   SafeAreaView,
   ScrollView,
 } from "react-native";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { featured } from "../../constants/dummyData";
 import * as Icon from "react-native-feather";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { selectpharmacy } from "../../slices/pharmacySlice";
 import { removeFromCart, selectCartItems, selectCartTotal } from "../../slices/cartSlice";
+import * as Notifications from "expo-notifications";
 
 const CartScreen = () => {
     const [groupedItems, setGroupedItems] = useState([]);
@@ -40,6 +41,87 @@ const CartScreen = () => {
     setGroupedItems(gItems);
     // console.log('items: ',gItems);
   }, [cartItems]);
+
+
+
+
+
+  // send notification
+
+  useEffect(() => {
+    async function configurePushNotifications() {
+      const { status } = await Notifications.getPermissionsAsync();
+
+      let finalStatus = status;
+
+      if (finalStatus !== "granted") {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+      }
+
+      if (finalStatus !== "granted") {
+        Alert.alert(
+          "Permissions required",
+          "Push notifications nedd the appropriate permissions"
+        );
+        return;
+      }
+
+      const pushTokenData = await Notifications.getExpoPushTokenAsync({
+        projectId: "ba564e9b-fe1e-4b24-9fac-13eb619fb567",
+      });
+      console.log(pushTokenData);
+
+      if (Platform.OS === "android") {
+        Notifications.setNotificationChannelAsync("default", {
+          name: "default",
+          importance: Notifications.AndroidImportance.DEFAULT,
+        });
+      }
+    }
+
+    configurePushNotifications();
+  }, []);
+
+  useEffect(() => {
+    const subscription = Notifications.addNotificationReceivedListener(
+      (notification) => {
+        // console.log("Notification received")
+        // console.log(notification)
+      }
+    );
+
+    const subscription2 = Notifications.addNotificationResponseReceivedListener(
+      (response) => {
+        console.log("Notification response received");
+        console.log(response);
+      }
+    );
+
+    return () => {
+      subscription.remove();
+      subscription2.remove();
+    };
+  }, []);
+
+
+  function scheduleNotificationHandler() {
+    Notifications.scheduleNotificationAsync({
+      content: {
+        title: "Notification",
+        body: " Merci d'avoir fait confiance a Dokitora , Votre commande a bien ete pris en charge ",
+        sound: true,
+        priority: Notifications.AndroidNotificationPriority.MAX,
+      },
+      trigger: {
+        seconds: 1,
+      },
+    });
+
+    navigation.navigate("PreparingOrder")
+
+  }
+
 
 
   return (
@@ -132,7 +214,7 @@ const CartScreen = () => {
         <View>
           <TouchableOpacity
            
-            onPress={() => navigation.navigate("PreparingOrder")}
+            onPress={scheduleNotificationHandler}
             className="p-3 rounded-full bg-zin500 "
           >
             <Text className="text-white text-center font-bold text-lg">
