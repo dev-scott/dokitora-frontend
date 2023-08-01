@@ -23,7 +23,7 @@ import Buy from "../assets/icons/Buy.svg"
 import HeadPhone from "../assets/icons/Headphone.svg"
 import Message from "../assets/icons/Message.svg"
 import Search from "../assets/icons/Search.svg"
-
+import Cart from "../assets/icons/cart.svg"
 
 export default  {
   ArrowRight: require("../assets/icons/ArrowRight.png"),
@@ -52,6 +52,7 @@ export default  {
   HeadPhone,
   Message,
   Search,
+  Cart,
   PersonOnboading41:require("../assets/images/PersonOnboading4.png"),
   PersonOnboading21:require("../assets/images/PersonOnboading2.png"),
 

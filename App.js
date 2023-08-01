@@ -12,11 +12,12 @@ import {
   GestureHandlerRootView,
 } from "react-native-gesture-handler";
 import { useSharedValue } from "react-native-reanimated";
+import UserLocationProvider from "./store/UserLocationContext";
+import { Provider } from "react-redux";
+import { store } from "./store";
 
 export default function App() {
-
   const activeIndex = useSharedValue(0);
-
 
   const flingUp = Gesture.Fling()
     .direction(Directions.UP)
@@ -30,23 +31,23 @@ export default function App() {
       console.log("fling down");
     });
 
-
-
-
   useFonts({
     "sharp-sans": require("./assets/fonts/SharpSansNo1-Bold.ttf"),
   });
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <NativeBaseProvider>
+    <NativeBaseProvider>
+      <GestureHandlerRootView style={{ flex: 1 }}>
         <>
           <StatusBar style="light" />
-
-          <AuthContextProvider>
-            <RootStack />
-          </AuthContextProvider>
+          <Provider store={store}>
+            <UserLocationProvider>
+              <AuthContextProvider>
+                <RootStack />
+              </AuthContextProvider>
+            </UserLocationProvider>
+          </Provider>
         </>
-      </NativeBaseProvider>
-</GestureHandlerRootView>
+      </GestureHandlerRootView>
+    </NativeBaseProvider>
   );
 }

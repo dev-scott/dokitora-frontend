@@ -23,6 +23,7 @@ import {
   GestureHandlerRootView,
 } from "react-native-gesture-handler";
 import { useSharedValue, withTiming } from "react-native-reanimated";
+import Header from "../../components/UI/Header";
 
 const Profil = assets.Profil;
 
@@ -45,7 +46,7 @@ const maxVisibleItems = 6;
 const duration = 300;
 
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
 
   const [valueForCard , setValueForCard] = useState("")
 
@@ -139,13 +140,13 @@ const HomeScreen = () => {
     };
   }, []);
 
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
 
   const authCtx = useContext(AuthContext);
 
-  const openDrawer = () => {
-    navigation.openDrawer();
-  };
+  // const openDrawer = () => {
+  //   navigation.openDrawer();
+  // };
 
   function submitLogout() {
     authCtx.logout();
@@ -189,9 +190,9 @@ const HomeScreen = () => {
         className="bg-slate950 flex-1 relative px-[16px] pt-[44px] pb-8 "
         pointerEvents="box-none"
       >
-        <View className="flex w-full items-center justify-between flex-row ">
+        {/* <View className="flex w-full items-center justify-between flex-row ">
           <Pressable onPress={submitLogout}>
-            <LogoIcon color="white" />
+            <LogoIcon color="white"  width={19} height={32} />
           </Pressable>
 
           <Pressable className="  w-[183px] h-10  bg-white20  flex flex-row items-center   px-[12px] py-[12px]    rounded-3xl">
@@ -203,9 +204,11 @@ const HomeScreen = () => {
             </Text>
           </Pressable>
           <Pressable onPress={openDrawer}>
-            <Profil className="" />
+            <Profil className="" width={40} height={40} />
           </Pressable>
-        </View>
+        </View> */}
+
+        <Header logout = {submitLogout} navigation = {navigation} />
 
         <View className="mt-[50px]">
           <Text className="text-white text-opacity-80 text-base font-normal">
@@ -239,6 +242,7 @@ const HomeScreen = () => {
                 index={index}
                 activeIndex={activeIndex}
                 totalLength={data.length - 1}
+                navigation={navigation}
               />
             );
           })}

@@ -10,7 +10,6 @@ import {
 } from "react-native";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { assets } from "../../constants";
-import { Input } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 
 import MainButton from "../../components/UI/MainButton";
@@ -27,6 +26,9 @@ import { Keyboard } from "react-native";
 
 
 const EnterNumber = () => {
+
+
+
   const navigation = useNavigation();
 
   const [isAuthenticating, setIsAuthenticating] = useState(false);
@@ -99,28 +101,7 @@ const EnterNumber = () => {
   }
 
 
-  const [keyboardOffset, setKeyboardOffset] = useState(0);
 
-  useEffect(() => {
-    const keyboardDidShowListener = Keyboard.addListener(
-      "keyboardDidShow",
-      (event) => {
-        setKeyboardOffset(event.endCoordinates.height);
-      }
-    );
-  
-    const keyboardDidHideListener = Keyboard.addListener(
-      "keyboardDidHide",
-      () => {
-        setKeyboardOffset(0);
-      }
-    );
-  
-    return () => {
-      keyboardDidShowListener.remove();
-      keyboardDidHideListener.remove();
-    };
-  }, []);
   
 
   return (
