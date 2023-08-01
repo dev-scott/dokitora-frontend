@@ -36,7 +36,7 @@ const MedicationRow = ({name, description, id, price, image}) => {
                     <TouchableOpacity 
                         onPress={handleDecrease} 
                         disabled={!totalItems.length} 
-                        className="p-1 rounded-full bg-zin500" 
+                        className="p-1 rounded-full bg-primary" 
                         >
                         <Icon.Minus strokeWidth={2} height={20} width={20} stroke="white" />
                     </TouchableOpacity>
@@ -46,7 +46,7 @@ const MedicationRow = ({name, description, id, price, image}) => {
                     
                     <TouchableOpacity 
                         onPress={handleIncrease} 
-                        className="p-1 rounded-full bg-zin500" 
+                        className="p-1 rounded-full bg-primary" 
                         >
                         <Icon.Plus strokeWidth={2} height={20} width={20} stroke="white" />
                     </TouchableOpacity>

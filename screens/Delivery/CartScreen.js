@@ -133,7 +133,7 @@ const CartScreen = () => {
         <View className="relative py-4 shadow-sm">
           <TouchableOpacity
             onPress={navigation.goBack}
-            className="absolute z-10 bg-zin500 rounded-full p-1 shadow top-5 left-2"
+            className="absolute z-10 bg-primary rounded-full p-1 shadow top-5 left-2"
           >
             <Icon.ArrowLeft strokeWidth={3} stroke="white" />
           </TouchableOpacity>
@@ -197,25 +197,25 @@ const CartScreen = () => {
 
         <View
         
-        className=" bg-green600 p-6 px-8 rounded-t-3xl space-y-4"
+        className=" bg-indigo600 text-white p-6 px-8 rounded-3xl space-y-4"
       >
         <View className="flex-row justify-between">
-          <Text className="text-gray-700">Subtotal</Text>
-          <Text className="text-gray-700">${cartTotal}</Text>
+          <Text  className="text-white">Subtotal</Text>
+          <Text className="text-white">${cartTotal}</Text>
         </View>
         <View className="flex-row justify-between">
-          <Text className="text-gray-700">Delivery Fee</Text>
-          <Text className="text-gray-700">${deliveryFee}</Text>
+          <Text className="text-white">Delivery Fee</Text>
+          <Text className="text-white">${deliveryFee}</Text>
         </View>
         <View className="flex-row justify-between">
-          <Text className="font-extrabold">Order Total</Text>
-          <Text className="font-extrabold">${deliveryFee + cartTotal}</Text>
+          <Text className="font-extrabold text-white">Order Total</Text>
+          <Text className="font-extrabold text-white ">${deliveryFee + cartTotal}</Text>
         </View>
         <View>
           <TouchableOpacity
            
             onPress={scheduleNotificationHandler}
-            className="p-3 rounded-full bg-zin500 "
+            className="p-3 rounded-[4px] bg-indigo500 "
           >
             <Text className="text-white text-center font-bold text-lg">
               Place Order

@@ -12,8 +12,7 @@ const PharmacyDetail = () => {
 
   const ArrowLeft = assets.ArrowLeft;
 
-  const dispatch= useDispatch()
-
+  const dispatch = useDispatch();
 
   const {
     params: {
@@ -41,29 +40,22 @@ const PharmacyDetail = () => {
     medications,
     lng,
     lat,
-  }
+  };
 
-  console.log("Pharmacy" , item.lng , item.lat)
+  console.log("Pharmacy", item.lng, item.lat);
 
-
-  useEffect( ()=>{
-
-    if(item && item.id){
-
-      dispatch(setPharmacy({...item}))
-      
+  useEffect(() => {
+    if (item && item.id) {
+      dispatch(setPharmacy({ ...item }));
     }
-
-  } )
-
-
+  });
 
   return (
     <View>
-      <CartIcon/>
+      <CartIcon />
       <ScrollView>
         <View className="relative">
-          <Image className="w-full h-72" source={{uri:imgUrl}} />
+          <Image className="w-full h-72" source={{ uri: imgUrl }} />
           <TouchableOpacity
             onPress={() => navigation.goBack()}
             className="absolute top-14 left-4 bg-white p-2 rounded-full shadow"
@@ -77,7 +69,14 @@ const PharmacyDetail = () => {
           className="bg-white -mt-12 pt-6"
         >
           <View className="px-5">
-            <Text className="text-3xl font-bold">{title}</Text>
+            <Text
+              style={{
+                fontFamily: "sharp-sans",
+              }}
+              className="text-3xl font-bold"
+            >
+              {title}
+            </Text>
             {/* copy this code from restaurant card */}
             <View className="flex-row space-x-2 my-1">
               <View className="flex-row items-center space-x-1">
@@ -87,8 +86,24 @@ const PharmacyDetail = () => {
                 />
                 <Text className="text-xs">
                   <Text className="text-green-700">{rating}</Text>
-                  <Text className="text-gray-700"> (4.6k review)</Text> ·{" "}
-                  <Text className="font-semibold text-gray-700">{type}</Text>
+                  <Text
+                    style={{
+                      fontFamily: "sharp-sans",
+                    }}
+                    className="text-gray-700"
+                  >
+                    {" "}
+                    (4.6k review)
+                  </Text>{" "}
+                  ·{" "}
+                  <Text
+                    style={{
+                      fontFamily: "sharp-sans",
+                    }}
+                    className="font-semibold text-gray-700"
+                  >
+                    {type}
+                  </Text>
                 </Text>
               </View>
               <View className="flex-row items-center space-x-1">
@@ -104,25 +119,21 @@ const PharmacyDetail = () => {
         </View>
 
         <View className="pb-36 bg-white">
-                <Text className="px-4 py-4 text-2xl font-bold">Medicament</Text>
-                {/* dishes */}
-                {
-                    medications.map(medication=>{
-                        return (
-                            <MedicationRow 
-                                key={medication.id}
-                                id={medication.id}
-                                name={medication.attributes.name}
-                                description={medication.attributes.description}
-                                price={medication.attributes.cost}
-                                image={medication.attributes.image.data.attributes.url}
-                            />
-                        )
-                    })
-
-                }
-            </View>
-
+          <Text className="px-4 py-4 text-2xl font-bold">Medicament</Text>
+          {/* dishes */}
+          {medications.map((medication) => {
+            return (
+              <MedicationRow
+                key={medication.id}
+                id={medication.id}
+                name={medication.attributes.name}
+                description={medication.attributes.description}
+                price={medication.attributes.cost}
+                image={medication.attributes.image.data.attributes.url}
+              />
+            );
+          })}
+        </View>
       </ScrollView>
     </View>
   );

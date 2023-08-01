@@ -63,14 +63,18 @@ const HomeDelivery = () => {
   // }
 
   return (
-    <SafeAreaView className="  flex-1 relative px-[16px] pt-[44px] pb-8 ">
+    <SafeAreaView   style={{
+      fontFamily: "sharp-sans",
+    }} className="  flex-1  relative px-[16px] pt-[44px] pb-8 ">
       <StatusBar barStyle="dark-content" />
 
       <View className="mt-3 flex items-end ">
-        <View className="flex items-center justify-center relative bg-white rounded-full h-7 w-7 ">
+
+        <View className="flex items-center justify-center relative  rounded-full h-7 w-7 ">
           <View className="absolute z-10 bg-pink w-2 h-2 rounded-full -right-1 -top-1"></View>
           <Cart className="text-white" />
         </View>
+
       </View>
 
       <View className="flex-row items-center mt-5  pb-2 ">
@@ -83,7 +87,9 @@ const HomeDelivery = () => {
           />
           <View className="flex-row items-center space-x-1 border-0 border-l-2 pl-2 border-l-gray-300">
             {/* <Icon.MapPin height="20" width="20" stroke="gray" /> */}
-            <Text className="text-gray-600">New York, NYC</Text>
+            <Text   style={{
+          fontFamily: "sharp-sans",
+        }} className="text-gray-600">New York, NYC</Text>
           </View>
         </View>
       </View>
