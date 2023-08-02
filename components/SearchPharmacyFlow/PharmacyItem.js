@@ -30,7 +30,12 @@ const PharmacyItem = ({ place }) => {
       )}
       <Text
         numberOfLines={2}
-        style={{ fontFamily: "raleway-bold", fontSize: 16, marginTop: 5 }}
+    
+        style={{
+            fontFamily: "sharp-sans",
+            fontSize: 16, marginTop: 5
+          }}
+
       >
         {place.attributes.name}
       </Text>

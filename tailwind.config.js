@@ -10,7 +10,9 @@ module.exports = {
     "./components/UI/MainButton.{js,jsx,ts,tsx}",
     "./components/UI/MainInput.{js,jsx,ts,tsx}",
     "./navigations/AppStack.{js,jsx,ts,tsx}",
-    "./screens/Root/HomeScreen.{js,jsx,ts,tsx}"
+    "./screens/Root/HomeScreen.{js,jsx,ts,tsx}",
+    "./**/*.{js,jsx,ts,tsx}",
+    "./navigations/DrawerNavigation.{js,jsx,ts,tsx}",
   ],
   theme: {
     screens: {

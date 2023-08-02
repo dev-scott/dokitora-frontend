@@ -81,8 +81,16 @@ const LoginScreen = () => {
 
     setIsAuthenticating(true);
     try {
-      const token = await login(enteredEmail, enterePassword);
+      const response = await login(enteredEmail, enterePassword);
+      const token = response.data.jwt;
       authCtx.authenticate(token);
+      const user = response.data.user
+
+      // console.log(token)
+      authCtx.updateUserInfo(user.username)
+      authCtx.updateUserEmail(user.email)
+      
+
     } catch (error) {
       console.log(error);
       Alert.alert(

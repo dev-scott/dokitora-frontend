@@ -43,12 +43,12 @@ export async function login(email, password) {
 
   // console.log(response.jwt)
 
-  console.log(response.data.user.id)
-  const token = response.data.jwt;
+  // console.log(response.data.user.id)
+  // const token = response.data.jwt;
 
-  console.log(token);
+  // console.log(token);
 
-  return token;
+  return response;
 }
 
 export async function forgotPassword(email) {

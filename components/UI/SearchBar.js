@@ -5,8 +5,12 @@ import { Dimensions } from "react-native";
 import { Image } from "react-native";
 import { TextInput } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { assets } from "../../constants";
 export default function SearchBar() {
   const [searchInput, setSearchInput] = useState();
+
+  const Logo =assets.LogoIcon
+
   return (
     <View>
       <LinearGradient
@@ -14,15 +18,7 @@ export default function SearchBar() {
         colors={["#F0EEFD", "transparent"]}
         style={{ padding: 20, width: Dimensions.get("screen").width }}
       >
-        <View
-     className="flex justify-center items-end w-full "
-        >
-       
-          <Image
-            source={require("../../assets/user.png")}
-            style={{ width: 50, height: 50, borderRadius: 100 }}
-          />
-        </View>
+
         <View
           className="bg-white"
           style={{

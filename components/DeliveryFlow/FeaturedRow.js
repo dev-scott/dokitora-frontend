@@ -29,7 +29,7 @@ const FeaturedRow = ({ title, description, restaurants }) => {
             style={{
               fontFamily: "sharp-sans",
             }}
-            className="font-bold text-lg"
+            className="text-lg"
           >
             {title}
           </Text>
