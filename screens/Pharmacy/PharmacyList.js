@@ -6,7 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import { UserLocationContext } from "../../store/UserLocationContext";
 import GlobalApi from "../../Services/GlobalApi";
 
-const HomePharmacy = ({navigation}) => {
+const PharmacyList = ({navigation}) => {
   // const navigation = useNavigation();
 
   const [placeList , setPlaceList] = useState([]);
@@ -38,11 +38,11 @@ const HomePharmacy = ({navigation}) => {
 
   return (
     <SafeAreaView  className="bg-slate950 flex-1 relative px-[16px] pt-[44px] pb-8 ">
-      <Header openDrawer={openDrawer} />
+      <Header  />
       <GoogleMapView />
 
     </SafeAreaView>
   );
 };
 
-export default HomePharmacy;
+export default PharmacyList;

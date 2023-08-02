@@ -16,6 +16,7 @@ export const AuthContext = createContext({
   date:"",
   role:"",
   updateUserInfo:(username)={},
+  updateUserEmail:(email)={},
 
 
 });
@@ -46,6 +47,10 @@ function AuthContextProvider({ children }) {
     setUsername(username);
   }
 
+  function updateUserEmail(email){
+    setEmail(email);
+  }
+
   function logout() {
     setAuthToken(null);
     AsyncStorage.removeItem("token");
@@ -64,7 +69,8 @@ function AuthContextProvider({ children }) {
     adresse:adresse,
     role:role,
     date:date,
-    updateUserInfo:updateUserInfo
+    updateUserInfo:updateUserInfo,
+    updateUserEmail:updateUserEmail
 
 
 

@@ -24,7 +24,7 @@ const Header = ({logout , navigation , openDrawer}) => {
         </Text>
       </Pressable>
 
-      <Pressable onPress={()=>navigation.navigate("DrawerNavigation")} >
+      <Pressable onPress={openDrawer} >
             <Profil className="" width={40} height={40} />
           </Pressable>
     </View>

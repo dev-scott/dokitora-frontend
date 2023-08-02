@@ -118,6 +118,8 @@ const EmailRegistration = ({navigation}) => {
       console.log(token)
       authCtx.authenticate(token);
       authCtx.updateUserInfo(user.username)
+      authCtx.updateUserEmail(user.email)
+      
 
       
 

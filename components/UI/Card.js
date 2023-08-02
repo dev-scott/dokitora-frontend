@@ -117,7 +117,7 @@ const Card = ({ info, index, activeIndex, totalLength , navigation  }) => {
             </Text>
           </View>
         </Pressable>
-        <Pressable className=" w-[130px] h-[166px] bg-white600 p-4 rounded-3xl border  border-white backdrop-blur-xl flex justify-center items-start    ">
+        <Pressable onPress={()=>{navigation.navigate("SearchPharmacy")}} className=" w-[130px] h-[166px] bg-white600 p-4 rounded-3xl border  border-white backdrop-blur-xl flex justify-center items-start    ">
           <View className=" flex justify-center items-center bg-green600 p-3 rounded-full ">
             <Buy />
           </View>

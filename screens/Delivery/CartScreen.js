@@ -6,26 +6,34 @@ import {
   SafeAreaView,
   ScrollView,
 } from "react-native";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { featured } from "../../constants/dummyData";
 import * as Icon from "react-native-feather";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { selectpharmacy } from "../../slices/pharmacySlice";
-import { removeFromCart, selectCartItems, selectCartTotal } from "../../slices/cartSlice";
+import {
+  removeFromCart,
+  selectCartItems,
+  selectCartTotal,
+} from "../../slices/cartSlice";
 import * as Notifications from "expo-notifications";
+import { addOrder } from "../../utils/api";
+import { AuthContext } from "../../store/AuthContext";
 
 const CartScreen = () => {
-    const [groupedItems, setGroupedItems] = useState([]);
+  const [groupedItems, setGroupedItems] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-    const cartItems = useSelector(selectCartItems)
-    const cartTotal = useSelector(selectCartTotal)
+  const cartItems = useSelector(selectCartItems);
+  const cartTotal = useSelector(selectCartTotal);
 
-    const dispatch = useDispatch();
-    const deliveryFee = 2;
+  const dispatch = useDispatch();
+  const deliveryFee = 2;
 
-  
-    const pharmacy = useSelector(selectpharmacy)
+  const authCtx = useContext(AuthContext);
+
+  const pharmacy = useSelector(selectpharmacy);
 
   const navigation = useNavigation();
 
@@ -41,10 +49,6 @@ const CartScreen = () => {
     setGroupedItems(gItems);
     // console.log('items: ',gItems);
   }, [cartItems]);
-
-
-
-
 
   // send notification
 
@@ -104,7 +108,6 @@ const CartScreen = () => {
     };
   }, []);
 
-
   function scheduleNotificationHandler() {
     Notifications.scheduleNotificationAsync({
       content: {
@@ -118,11 +121,49 @@ const CartScreen = () => {
       },
     });
 
-    navigation.navigate("PreparingOrder")
-
+    navigation.navigate("PreparingOrder");
   }
 
+  // Add to order
 
+  function submitAddOrder() {
+    const order_name = authCtx.username;
+    const order_email = authCtx.email
+    const order_phone = null
+    const order_date = new Date().toLocaleDateString();
+    const order_pharmacy= pharmacy.title
+    // console.log(order_email);
+
+
+
+
+
+    scheduleNotificationHandler();
+
+    createOrder({ order_name, order_email , order_phone , order_date , order_pharmacy });
+  }
+
+  async function createOrder({ order_name, order_email , order_phone , order_date , order_pharmacy }) {
+    // console.log(enteredEmail, enterePassword);
+// console.log(order_name, order_email , order_phone , order_date , order_pharmacy);
+    setIsLoading(true);
+    try {
+      const response = await addOrder(
+        order_name,
+        order_email,
+        order_phone,
+        order_date,
+        order_pharmacy
+      );
+    } catch (error) {
+      console.log(error);
+      Alert.alert(
+        "Failled to add order",
+        "Could not add Order , verified entry please"
+      );
+      setIsLoading(false);
+    }
+  }
 
   return (
     <SafeAreaView
@@ -139,9 +180,7 @@ const CartScreen = () => {
           </TouchableOpacity>
           <View>
             <Text className="text-center font-bold text-xl">Your cart</Text>
-            <Text className="text-center text-gray-500">
-              {pharmacy.title}
-            </Text>
+            <Text className="text-center text-gray-500">{pharmacy.title}</Text>
           </View>
         </View>
 
@@ -159,17 +198,15 @@ const CartScreen = () => {
         <ScrollView
           showsVerticalScrollIndicator={false}
           className="bg-white pt-5"
-          contentContainerStyle={{ paddingBottom:50 }}
+          contentContainerStyle={{ paddingBottom: 50 }}
         >
-        {Object.entries(groupedItems).map(([key, items]) => {
+          {Object.entries(groupedItems).map(([key, items]) => {
             return (
               <View
                 key={key}
                 className="flex-row items-center space-x-3 py-2 px-4 bg-white rounded-3xl mx-2 mb-3 shadow-md"
               >
-                <Text  className="font-bold">
-                  {items.length} x
-                </Text>
+                <Text className="font-bold">{items.length} x</Text>
                 <Image
                   className="h-14 w-14 rounded-full"
                   source={items[0].image}
@@ -177,10 +214,11 @@ const CartScreen = () => {
                 <Text className="flex-1 font-bold text-gray-700">
                   {items[0].name}
                 </Text>
-                <Text className="font-semibold text-base">${items[0].price}</Text>
+                <Text className="font-semibold text-base">
+                  ${items[0].price}
+                </Text>
                 <TouchableOpacity
                   className="p-1 rounded-full bg-indigo50"
-
                   onPress={() => dispatch(removeFromCart({ id: items[0]?.id }))}
                 >
                   <Icon.Minus
@@ -195,36 +233,32 @@ const CartScreen = () => {
           })}
         </ScrollView>
 
-        <View
-        
-        className=" bg-indigo600 text-white p-6 px-8 rounded-3xl space-y-4"
-      >
-        <View className="flex-row justify-between">
-          <Text  className="text-white">Subtotal</Text>
-          <Text className="text-white">${cartTotal}</Text>
-        </View>
-        <View className="flex-row justify-between">
-          <Text className="text-white">Delivery Fee</Text>
-          <Text className="text-white">${deliveryFee}</Text>
-        </View>
-        <View className="flex-row justify-between">
-          <Text className="font-extrabold text-white">Order Total</Text>
-          <Text className="font-extrabold text-white ">${deliveryFee + cartTotal}</Text>
-        </View>
-        <View>
-          <TouchableOpacity
-           
-            onPress={scheduleNotificationHandler}
-            className="p-3 rounded-[4px] bg-indigo500 "
-          >
-            <Text className="text-white text-center font-bold text-lg">
-              Place Order
+        <View className=" bg-indigo600 text-white p-6 px-8 rounded-3xl space-y-4">
+          <View className="flex-row justify-between">
+            <Text className="text-white">Subtotal</Text>
+            <Text className="text-white">${cartTotal}</Text>
+          </View>
+          <View className="flex-row justify-between">
+            <Text className="text-white">Delivery Fee</Text>
+            <Text className="text-white">${deliveryFee}</Text>
+          </View>
+          <View className="flex-row justify-between">
+            <Text className="font-extrabold text-white">Order Total</Text>
+            <Text className="font-extrabold text-white ">
+              ${deliveryFee + cartTotal}
             </Text>
-          </TouchableOpacity>
+          </View>
+          <View>
+            <TouchableOpacity
+              onPress={submitAddOrder}
+              className="p-3 rounded-[4px] bg-indigo500 "
+            >
+              <Text className="text-white text-center font-bold text-lg">
+                Place Order
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-
-
       </View>
     </SafeAreaView>
   );

@@ -144,9 +144,9 @@ const HomeScreen = ({navigation}) => {
 
   const authCtx = useContext(AuthContext);
 
-  // const openDrawer = () => {
-  //   navigation.openDrawer();
-  // };
+  const openDrawer = () => {
+    navigation.openDrawer();
+  };
 
   function submitLogout() {
     authCtx.logout();
@@ -208,7 +208,7 @@ const HomeScreen = ({navigation}) => {
           </Pressable>
         </View> */}
 
-        <Header logout = {submitLogout} navigation = {navigation} />
+        <Header logout = {submitLogout} openDrawer={openDrawer} />
 
         <View className="mt-[50px]">
           <Text className="text-white text-opacity-80 text-base font-normal">

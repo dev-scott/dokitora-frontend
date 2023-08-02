@@ -6,17 +6,6 @@ import { getPharmacy } from "../../utils/api";
 const FeaturedRow = ({ title, description, restaurants }) => {
   const [pharmacyData, setPharmacyData] = useState([]);
 
-  // useEffect(()=>{
-
-  //   getPharmacy().then((data)=>{
-  //     // setPharmacyData(data.data)
-  //     // console.log(data.data)
-  //   })
-
-  // },[])
-
-  // console.log(pharmacyData)
-
   useEffect(() => {
     getPharmacyData();
   }, []);

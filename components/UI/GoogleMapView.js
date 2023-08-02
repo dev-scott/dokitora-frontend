@@ -25,7 +25,7 @@ const GoogleMapView = () => {
     
 
   return (
-    <View className="mt-4 rounded-xl" >
+    <View className="mt-4 rounded-2xl" >
       <MapView
         style={{
           width: Dimensions.get("screen").width * 0.89,

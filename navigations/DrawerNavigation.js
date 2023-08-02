@@ -17,9 +17,10 @@ import {
 
 import { assets } from "../constants";
 import HomeScreen from "../screens/Root/HomeScreen";
-import HomePharmacy from "../screens/Pharmacy/HomePharmacy";
+import PharmacyList from "../screens/Pharmacy/PharmacyList";
 import HomeDelivery from "../screens/Delivery/HomeDelivery";
 import SearchPharmacy from "../screens/Pharmacy/SearchPharmacy";
+import { ProfileScreen } from "../screens";
 
 
 const Profil = assets.Profil
@@ -70,7 +71,7 @@ const DrawerNavigation = () => {
         drawerContent={(props) => <CustomDrawerContent {...props} />}
       >
         <Drawer.Screen
-          name="SearchPharmacy"
+          name="HomeScreen"
           options={{
             headerShown: false,
             title: "Home",
@@ -78,7 +79,18 @@ const DrawerNavigation = () => {
               <MaterialIcons name="timer" size={20} color="#808080" />
             ),
           }}
-          component={SearchPharmacy}
+          component={HomeScreen}
+        />
+        <Drawer.Screen
+          name="ProfileScreen"
+          options={{
+            headerShown: false,
+            title: "Home",
+            drawerIcon: () => (
+              <MaterialIcons name="timer" size={20} color="#808080" />
+            ),
+          }}
+          component={ProfileScreen}
         />
        
       </Drawer.Navigator>
