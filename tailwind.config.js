@@ -13,6 +13,7 @@ module.exports = {
     "./screens/Root/HomeScreen.{js,jsx,ts,tsx}",
     "./**/*.{js,jsx,ts,tsx}",
     "./navigations/DrawerNavigation.{js,jsx,ts,tsx}",
+    "./components/econsulation/VideoCallPage.{js,jsx,ts,tsx}",
   ],
   theme: {
     screens: {

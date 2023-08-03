@@ -11,6 +11,7 @@ import CartScreen from '../screens/Delivery/CartScreen';
 import PreparingOrder from '../screens/Delivery/PreparingOrder';
 import DeliveryScreen from '../screens/Delivery/DeliveryScreen';
 import SearchPharmacy from '../screens/Pharmacy/SearchPharmacy';
+import VoiceCallPage from '../screens/econsultation/VideoCallPage';
 
 
 const Stack = createNativeStackNavigator();
@@ -26,6 +27,7 @@ const AppStack = () => {
         <Stack.Screen name="CartScreen" options={{presentation:'modal'}} component={CartScreen} />
         <Stack.Screen name="HomeDelivery" component={HomeDelivery} />
         <Stack.Screen name="PharmacyList" component={PharmacyList} />
+        <Stack.Screen name="VoiceCallPage" component={VoiceCallPage} />
         <Stack.Screen name="SearchPharmacy" component={SearchPharmacy} />
         <Stack.Screen name="PreparingOrder" options={{presentation:'fullScreenModal'}} component={PreparingOrder} />
         <Stack.Screen name="Delivery" options={{presentation:'fullScreenModal'}} component={DeliveryScreen} />
