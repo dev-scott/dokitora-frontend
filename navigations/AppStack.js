@@ -12,6 +12,7 @@ import PreparingOrder from '../screens/Delivery/PreparingOrder';
 import DeliveryScreen from '../screens/Delivery/DeliveryScreen';
 import SearchPharmacy from '../screens/Pharmacy/SearchPharmacy';
 import VoiceCallPage from '../screens/econsultation/VideoCallPage';
+import BlogDetail from '../screens/Blog/BlogDetail';
 
 
 const Stack = createNativeStackNavigator();
@@ -24,6 +25,7 @@ const AppStack = () => {
         {/* <Stack.Screen name="HomeScreen" component={HomeScreen} /> */}
         <Stack.Screen name="DrawerNavigation" component={DrawerNavigation} />
         <Stack.Screen name="PharmacyDetail" component={PharmacyDetail} />
+        <Stack.Screen name="BlogDetail" component={BlogDetail} />
         <Stack.Screen name="CartScreen" options={{presentation:'modal'}} component={CartScreen} />
         <Stack.Screen name="HomeDelivery" component={HomeDelivery} />
         <Stack.Screen name="PharmacyList" component={PharmacyList} />

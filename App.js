@@ -15,6 +15,7 @@ import { useSharedValue } from "react-native-reanimated";
 import UserLocationProvider from "./store/UserLocationContext";
 import { Provider } from "react-redux";
 import { store } from "./store";
+import "expo-dev-client";
 
 export default function App() {
   const activeIndex = useSharedValue(0);
