@@ -1,5 +1,5 @@
-import React from "react";
-import { View, SafeAreaView, StyleSheet } from "react-native";
+import React, { useContext, useEffect } from "react";
+import { View, SafeAreaView, StyleSheet, Image } from "react-native";
 import {
   Avatar,
   Title,
@@ -13,13 +13,16 @@ import { assets } from "../../constants";
 import { Touchable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { AuthContext } from "../../store/AuthContext";
+import { Ionicons } from '@expo/vector-icons'; 
 
 // import Share from 'react-native-share';
 
 // import files from '../../assets/filesBase64';
 
 const ProfileScreen = () => {
-  const navigation=useNavigation()
+  const navigation = useNavigation();
   const ArrowLeft = assets.ArrowLeft;
   const myCustomShare = async () => {
     // const shareOptions = {
@@ -35,12 +38,14 @@ const ProfileScreen = () => {
     // }
   };
 
-  const navigateBack=()=>{
+  const navigateBack = () => {
+    navigation.goBack();
+  };
 
-    navigation.goBack()
+  const authCtx = useContext(AuthContext);
 
-
-  }
+  const user = authCtx.username;
+  const email = authCtx.email;
 
   return (
     <SafeAreaView
@@ -48,18 +53,14 @@ const ProfileScreen = () => {
       pointerEvents="box-none"
     >
       <View className="flex ">
-        <TouchableOpacity onPress={navigateBack} >
+        <TouchableOpacity onPress={navigateBack}>
           <ArrowLeft />
         </TouchableOpacity>
       </View>
       <View className="px-[30px] mb-[25px]">
         <View style={{ flexDirection: "row", marginTop: 15 }}>
-          <Avatar.Image
-            source={{
-              uri: "https://api.adorable.io/avatars/80/abott@adorable.png",
-            }}
-            size={80}
-          />
+          {/* <Image source={require("../../assets/images/profil.png")} /> */}
+          <Ionicons name="person-circle" size={80} color="#777777" />
           <View style={{ marginLeft: 20 }}>
             <Title
               style={[
@@ -70,9 +71,9 @@ const ProfileScreen = () => {
                 },
               ]}
             >
-              John Doe
+              {user}
             </Title>
-            <Caption style={styles.caption}>@j_doe</Caption>
+            <Caption style={styles.caption}>{email}</Caption>
           </View>
         </View>
       </View>
@@ -92,9 +93,7 @@ const ProfileScreen = () => {
         </View>
         <View className="flex-row mb-[10px]">
           <Icon name="email" color="#777777" size={20} />
-          <Text style={{ color: "#777777", marginLeft: 20 }}>
-            john_doe@email.com
-          </Text>
+          <Text style={{ color: "#777777", marginLeft: 20 }}>{email}</Text>
         </View>
       </View>
 
@@ -120,31 +119,31 @@ const ProfileScreen = () => {
       <View className="mt-3">
         <TouchableRipple onPress={() => {}}>
           <View style={styles.menuItem}>
-            <Icon name="heart-outline" color="#FF6347" size={25} />
-            <Text  style={styles.menuItemText}>Your Favorites</Text>
+            <Icon name="heart-outline" color="#4B33E5" size={25} />
+            <Text style={styles.menuItemText}>Your Favorites</Text>
           </View>
         </TouchableRipple>
         <TouchableRipple onPress={() => {}}>
           <View style={styles.menuItem}>
-            <Icon name="credit-card" color="#FF6347" size={25} />
+            <Icon name="credit-card" color="#4B33E5" size={25} />
             <Text style={styles.menuItemText}>Payment</Text>
           </View>
         </TouchableRipple>
         <TouchableRipple onPress={myCustomShare}>
           <View style={styles.menuItem}>
-            <Icon name="share-outline" color="#FF6347" size={25} />
-            <Text style={styles.menuItemText} >Tell Your Friends</Text>
+            <Icon name="share-outline" color="#4B33E5" size={25} />
+            <Text style={styles.menuItemText}>Tell Your Friends</Text>
           </View>
         </TouchableRipple>
         <TouchableRipple onPress={() => {}}>
           <View style={styles.menuItem}>
-            <Icon name="account-check-outline" color="#FF6347" size={25} />
+            <Icon name="account-check-outline" color="#4B33E5" size={25} />
             <Text style={styles.menuItemText}>Support</Text>
           </View>
         </TouchableRipple>
         <TouchableRipple onPress={() => {}}>
           <View style={styles.menuItem}>
-            <Icon name="settings-outline" color="#FF6347" size={25} />
+            <Icon name="settings-outline" color="#4B33E5" size={25} />
             <Text style={styles.menuItemText}>Settings</Text>
           </View>
         </TouchableRipple>

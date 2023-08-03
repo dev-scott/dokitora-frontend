@@ -39,6 +39,8 @@ function AuthContextProvider({ children }) {
     setIsLoadingAuth(true);
     setAuthToken(token);
     AsyncStorage.setItem("token", JSON.stringify(token) );
+    AsyncStorage.setItem("username",username); 
+    AsyncStorage.setItem("email",email);  
 
     setIsLoadingAuth(false);
   }

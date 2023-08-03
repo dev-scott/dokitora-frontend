@@ -1,6 +1,7 @@
 import { View, Text, Pressable } from "react-native";
 import React from "react";
 import { assets } from "../../constants";
+import { Ionicons } from "@expo/vector-icons";
 
 const Profil = assets.Profil;
 
@@ -25,7 +26,7 @@ const Header = ({logout , navigation , openDrawer}) => {
       </Pressable>
 
       <Pressable onPress={openDrawer} >
-            <Profil className="" width={40} height={40} />
+      <Ionicons name="person-circle" size={35} color="white" />
           </Pressable>
     </View>
   );

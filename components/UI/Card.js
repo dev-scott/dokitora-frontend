@@ -133,10 +133,10 @@ const Card = ({ info, index, activeIndex, totalLength, navigation }) => {
             </View>
 
             <View className="mt-6">
-              <Text className="text-indigo950 text-sm font-bold   ">Blog</Text>
+              <Text className="text-indigo950 text-sm font-bold   ">Optenier de l'aide</Text>
               <Text className="text-indigo950 text-opacity-70 mt-3 text-xs font-normal leading-tight">
                 {" "}
-                Lire nos dernier article de blog
+                Rencontrez vous un probleme
               </Text>
             </View>
           </Pressable>
