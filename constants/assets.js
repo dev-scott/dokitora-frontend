@@ -24,6 +24,8 @@ import HeadPhone from "../assets/icons/Headphone.svg"
 import Message from "../assets/icons/Message.svg"
 import Search from "../assets/icons/Search.svg"
 import Cart from "../assets/icons/cart.svg"
+import Valide from "../assets/icons/valide.svg"
+import Erreur from "../assets/icons/erreur.svg"
 
 export default  {
   ArrowRight: require("../assets/icons/ArrowRight.png"),
@@ -53,6 +55,8 @@ export default  {
   Message,
   Search,
   Cart,
+  Valide,
+  Erreur,
   PersonOnboading41:require("../assets/images/PersonOnboading4.png"),
   PersonOnboading21:require("../assets/images/PersonOnboading2.png"),
 
