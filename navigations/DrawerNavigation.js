@@ -24,29 +24,27 @@ import SearchPharmacy from "../screens/Pharmacy/SearchPharmacy";
 import { ProfileScreen } from "../screens";
 import { Avatar } from "native-base";
 import { AuthContext } from "../store/AuthContext";
+import OrderList from "../screens/Delivery/OrderList";
 
 const Profil = assets.Profil;
 
 const Drawer = createDrawerNavigator();
 
 function CustomDrawerContent(props) {
-
-  const authCtx = useContext(AuthContext)
+  const authCtx = useContext(AuthContext);
 
   function submitLogout() {
-    
     authCtx.logout();
   }
 
-  const user = authCtx.username
-  const email=authCtx.email
+  const user = authCtx.username;
+  const email = authCtx.email;
 
   return (
     <View className="flex-1">
-      
-    <DrawerContentScrollView className="" {...props}>
-      <SafeAreaView className="flex relative flex-1  ">
-        {/* <View
+      <DrawerContentScrollView className="" {...props}>
+        <SafeAreaView className="flex relative flex-1  ">
+          {/* <View
           style={{
             height: 200,
             width: "100%",
@@ -78,47 +76,41 @@ function CustomDrawerContent(props) {
           </Text>
         </View> */}
 
-        <View className="pl-5 w-full  ">
-          <View className="flex flex-row  mt-3">
-          <Ionicons name="person-circle" size={80} color="#777777" />
+          <View className="pl-5 w-full  ">
+            <View className="flex flex-row  mt-3">
+              <Ionicons name="person-circle" size={80} color="#777777" />
 
-
-            <View className="flex flex-col ml-3">
-              <Text>{user}</Text>
-              <Text>{email}</Text>
+              <View className="flex flex-col ml-3">
+                <Text>{user}</Text>
+                <Text>{email}</Text>
+              </View>
             </View>
           </View>
-        </View>
 
-        {/* <Drawer.Section >
+          {/* <Drawer.Section >
 
               </Drawer.Section>
 
          */}
 
-        <DrawerItemList {...props} />
+          <DrawerItemList {...props} />
 
-        <View className="border-t-0.5 border-[#808080]">
-          {/* <Text>Preference</Text> */}
-        </View>
+          <View className="border-t-0.5 border-[#808080]">
+            {/* <Text>Preference</Text> */}
+          </View>
+        </SafeAreaView>
+      </DrawerContentScrollView>
 
-
-      </SafeAreaView>
-    </DrawerContentScrollView>
-
-
-    <View className="mb-3  border-t-0.5 border-[#808080]">
-          <DrawerItem
-            icon={({ color, size }) => (
-              <SimpleLineIcons name="logout" size={24} color="#808080" />
-            )}
-            label="Logout"
-            onPress={submitLogout}
-          />
-        </View>
-
+      <View className="mb-3  border-t-0.5 border-[#808080]">
+        <DrawerItem
+          icon={({ color, size }) => (
+            <SimpleLineIcons name="logout" size={24} color="#808080" />
+          )}
+          label="Logout"
+          onPress={submitLogout}
+        />
+      </View>
     </View>
-
   );
 }
 
@@ -139,10 +131,19 @@ const DrawerNavigation = () => {
         component={HomeScreen}
       />
       <Drawer.Screen
+        name="OrderList"
+        options={{
+          headerShown: false,
+          title: "Histoique des commandes",
+          drawerIcon: () => (
+            <FontAwesome name="history" size={20} color="#808080" />
+          ),
+        }}
+        component={OrderList}
+      />
+      <Drawer.Screen
         name="ProfileScreen"
         options={{
-          
-
           headerShown: false,
           title: "Profile",
           drawerIcon: () => (

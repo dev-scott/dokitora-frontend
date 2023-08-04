@@ -28,7 +28,7 @@ const Card = ({ info, index, activeIndex, totalLength, navigation }) => {
 
     const resp = result.data;
 
-    console.log(resp);
+    // console.log(resp);
     setBlogs(resp);
   };
   // console.log(blogs);

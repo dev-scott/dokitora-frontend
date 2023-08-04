@@ -5,6 +5,7 @@ import {
   Image,
   SafeAreaView,
   ScrollView,
+  Alert,
 } from "react-native";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { featured } from "../../constants/dummyData";
@@ -132,6 +133,7 @@ const CartScreen = () => {
     const order_phone = null
     const order_date = new Date().toLocaleDateString();
     const order_pharmacy= pharmacy.title
+    const order_price= cartTotal+deliveryFee
     // console.log(order_email);
 
 
@@ -140,10 +142,10 @@ const CartScreen = () => {
 
     scheduleNotificationHandler();
 
-    createOrder({ order_name, order_email , order_phone , order_date , order_pharmacy });
+    createOrder({ order_name, order_email , order_phone , order_date , order_pharmacy ,order_price});
   }
 
-  async function createOrder({ order_name, order_email , order_phone , order_date , order_pharmacy }) {
+  async function createOrder({ order_name, order_email , order_phone , order_date , order_pharmacy ,order_price}) {
     // console.log(enteredEmail, enterePassword);
 // console.log(order_name, order_email , order_phone , order_date , order_pharmacy);
     setIsLoading(true);
@@ -153,7 +155,8 @@ const CartScreen = () => {
         order_email,
         order_phone,
         order_date,
-        order_pharmacy
+        order_pharmacy,
+        order_price
       );
     } catch (error) {
       console.log(error);
