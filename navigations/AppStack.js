@@ -1,3 +1,4 @@
+
 import { View, Text } from "react-native";
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
@@ -14,13 +15,18 @@ import SearchPharmacy from "../screens/Pharmacy/SearchPharmacy";
 import VoiceCallPage from "../screens/econsultation/VideoCallPage";
 import BlogDetail from "../screens/Blog/BlogDetail";
 import PharamcyProfil from "../screens/Pharmacy/PharamcyProfil";
-import { TransitionPresets, createStackNavigator } from '@react-navigation/stack'
-
+import {
+  TransitionPresets,
+  createStackNavigator,
+} from "@react-navigation/stack";
+import ChatRoot from "../screens/Chat/ChatRoot";
+import Layout from "../screens/Chat/layout";
+import ChannelDetail from "../screens/Chat/channel/ChannelDetail";
 
 const Stack = createStackNavigator();
 
 const AppStack = () => {
-  const isAndroid=true;
+  const isAndroid = true;
 
   return (
     <NavigationContainer>
@@ -28,39 +34,34 @@ const AppStack = () => {
         initialRouteName="HomeScreen"
         // screenOptions={{ headerShown: false }}
         screenOptions={{
-          gestureEnabled:false,
+          gestureEnabled: false,
           // headerShown: false,
-        
-          ...(isAndroid&&TransitionPresets.ModalPresentationIOS)
-  
-      }}
+
+          ...(isAndroid && TransitionPresets.ModalPresentationIOS),
+        }}
       >
         {/* <Stack.Screen name="HomeScreen" component={HomeScreen} /> */}
-        <Stack.Screen name="DrawerNavigation" component={DrawerNavigation}
-        
-        options={{headerShown:false}}
-
-
+        <Stack.Screen
+          name="DrawerNavigation"
+          component={DrawerNavigation}
+          options={{ headerShown: false }}
         />
-        <Stack.Screen name="PharmacyDetail" component={PharmacyDetail}
-        
-        options={{title:""}}
-
-
+        <Stack.Screen
+          name="PharmacyDetail"
+          component={PharmacyDetail}
+          options={{ title: "" }}
         />
         <Stack.Screen name="BlogDetail" component={BlogDetail} />
         <Stack.Screen
           name="CartScreen"
           // options={{ presentation: "modal" }}
           component={CartScreen}
-          options={{headerShown:false}}
-
-          
+          options={{ headerShown: false }}
         />
-        <Stack.Screen name="HomeDelivery" component={HomeDelivery}
-               options={{headerShown:false}}
-               
-
+        <Stack.Screen
+          name="HomeDelivery"
+          component={HomeDelivery}
+          options={{ headerShown: false }}
         />
         <Stack.Screen name="PharmacyList" component={PharmacyList} />
 
@@ -74,22 +75,30 @@ const AppStack = () => {
         />
 
         <Stack.Screen name="VoiceCallPage" component={VoiceCallPage} />
-        <Stack.Screen name="SearchPharmacy" component={SearchPharmacy}
-        
-        options={{headerShown:false}}
-
-
+        <Stack.Screen
+          name="SearchPharmacy"
+          component={SearchPharmacy}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="PreparingOrder"
-          options={{ presentation: "fullScreenModal" , headerShown:false }}
+          options={{ presentation: "fullScreenModal", headerShown: false }}
           component={PreparingOrder}
         />
         <Stack.Screen
           name="Delivery"
-          options={{ presentation: "fullScreenModal" , headerShown:false }}
+          options={{ presentation: "fullScreenModal", headerShown: false }}
           component={DeliveryScreen}
-          
+        />
+        <Stack.Screen
+          name="ChatRoot"
+          options={{ presentation: "fullScreenModal", headerShown: false }}
+          component={ChatRoot}
+        />
+        <Stack.Screen
+          name="ChannelDetail"
+          options={{ presentation: "fullScreenModal", headerShown: false }}
+          component={ChannelDetail}
         />
       </Stack.Navigator>
     </NavigationContainer>
