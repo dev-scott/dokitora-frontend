@@ -9,7 +9,7 @@ import React, { useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { assets } from "../../constants";
 import { useDispatch, useSelector } from "react-redux";
-import { selectmyOrder, setMyOrder } from "../../slices/orderSlice";
+// import { selectmyOrder, setMyOrder } from "../../slices/orderSlice";
 
 const OrderCard = ({
     id,
@@ -23,7 +23,7 @@ const OrderCard = ({
 }) => {
   const navigation = useNavigation();
 
-  const orderTerst = useSelector(selectmyOrder)
+  // const orderTerst = useSelector(selectmyOrder)
 
   const dispatch = useDispatch()
 
@@ -33,15 +33,15 @@ const OrderCard = ({
   const item = { id,name , phone , date , email , pharmacy_name , order_price , onder_confirm}
 
 
-  useEffect(()=>{
+  // useEffect(()=>{
 
-    if(item && item.id){
+  //   if(item && item.id){
 
-        dispatch(setMyOrder({...item}))
+  //       dispatch(setMyOrder({...item}))
         
-    }
+  //   }
 
-  })
+  // })
 
   return (
     <TouchableOpacity
