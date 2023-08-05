@@ -69,7 +69,7 @@ const OrderList = ({ navigation }) => {
         className="overflow-visible py-5"
       >
         {orders.map((order , index)=>(
-            <OrderCard key={index} name={order.name} phone={order.phone} date={order.date} email={order.email} pharmacy_name={order.pharmacy_name} order_price={order.order_price} onder_confirm={order.confirmed} />
+            <OrderCard key={index} name={order.name} phone={order.phone} date={order.date} email={order.email} pharmacy_name={order.pharmacy_name} order_price={order.order_price} onder_confirm={order.confirmed} id={order.id} />
             ))}
             {/* <Text className="text-white">ddd</Text> */}
 

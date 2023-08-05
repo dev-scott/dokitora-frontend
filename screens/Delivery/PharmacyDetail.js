@@ -56,12 +56,12 @@ const PharmacyDetail = () => {
       <ScrollView>
         <View className="relative">
           <Image className="w-full h-72" source={{ uri: imgUrl }} />
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={() => navigation.goBack()}
             className="absolute top-14 left-4 bg-white p-2 rounded-full shadow"
           >
             <ArrowLeft />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
 
         <View
