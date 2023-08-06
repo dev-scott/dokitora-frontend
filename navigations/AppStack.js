@@ -19,9 +19,12 @@ import {
   TransitionPresets,
   createStackNavigator,
 } from "@react-navigation/stack";
-import ChatRoot from "../screens/Chat/ChatRoot";
-import Layout from "../screens/Chat/layout";
+// import ChatRoot from "../screens/Chat/ChatRoot";
 import ChannelDetail from "../screens/Chat/channel/ChannelDetail";
+import Layout from "../screens/Chat/LayoutRoot";
+import LayoutRoot from "../screens/Chat/LayoutRoot";
+import NewChat from "../screens/Chat/NewChat";
+import DoctorDetail from "../screens/Doctor/DoctorDetail";
 
 const Stack = createStackNavigator();
 
@@ -90,11 +93,27 @@ const AppStack = () => {
           options={{ presentation: "fullScreenModal", headerShown: false }}
           component={DeliveryScreen}
         />
-        <Stack.Screen
+        {/* <Stack.Screen
           name="ChatRoot"
           options={{ presentation: "fullScreenModal", headerShown: false }}
           component={ChatRoot}
+        /> */}
+        <Stack.Screen
+          name="LayoutRoot"
+          options={{ presentation: "fullScreenModal", headerShown: false }}
+          component={LayoutRoot}
         />
+        <Stack.Screen
+          name="NewChat"
+          options={{ presentation: "fullScreenModal", headerShown: false }}
+          component={NewChat}
+        />
+        <Stack.Screen
+          name="DoctorDetail"
+          options={{ presentation: "fullScreenModal", headerShown: false }}
+          component={DoctorDetail}
+        />
+  
         <Stack.Screen
           name="ChannelDetail"
           options={{ presentation: "fullScreenModal", headerShown: false }}

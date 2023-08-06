@@ -26,6 +26,7 @@ import Search from "../assets/icons/Search.svg"
 import Cart from "../assets/icons/cart.svg"
 import Valide from "../assets/icons/valide.svg"
 import Erreur from "../assets/icons/erreur.svg"
+import Doctor from "../assets/images/doctor.svg"
 
 export default  {
   ArrowRight: require("../assets/icons/ArrowRight.png"),
@@ -57,6 +58,7 @@ export default  {
   Cart,
   Valide,
   Erreur,
+  Doctor,
   PersonOnboading41:require("../assets/images/PersonOnboading4.png"),
   PersonOnboading21:require("../assets/images/PersonOnboading2.png"),
 

@@ -109,7 +109,7 @@ const Card = ({ info, index, activeIndex, totalLength, navigation }) => {
           </Pressable>
           <Pressable
             onPress={() => {
-              navigation.navigate("ChatRoot");
+              navigation.navigate("NewChat");
             }}
             className=" w-[130px] h-[166px] bg-white600 p-4 rounded-3xl border  border-white backdrop-blur-xl flex justify-center items-start    "
           >

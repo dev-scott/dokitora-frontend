@@ -86,9 +86,10 @@ const LoginScreen = () => {
       authCtx.authenticate(token);
       const user = response.data.user
 
-      // console.log(token)
+      console.log(token)
       authCtx.updateUserInfo(user.username)
       authCtx.updateUserEmail(user.email)
+      authCtx.updateUserId(user.id)
       
 
     } catch (error) {

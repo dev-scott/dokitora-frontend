@@ -12,8 +12,8 @@ const GoogleMapView = ({place}) => {
     console.log(location);
     if (location) {
       setmapRegion({
-        latitude: place.attributes.latitude,
-        longitude: place.attributes.longitude,
+        latitude: place.attributes?.latitude?? 0,
+        longitude: place.attributes?.longitude?? 0,
         latitudeDelta: 0.0422,
         longitudeDelta: 0.0421,
       });
@@ -41,7 +41,7 @@ const GoogleMapView = ({place}) => {
         showsUserLocation={true}
         region={mapRegion}
       >
-        <Marker title={place.attributes.name} coordinate={mapRegion} />
+        <Marker title={place.attributes?.name? place.attributes.name : "test"} coordinate={mapRegion} />
       </MapView>
     </View>
   );

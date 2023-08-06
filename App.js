@@ -1,8 +1,10 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import RootStack from "./navigations/RootStack";
-import AuthContextProvider from "./store/AuthContext";
-import { useEffect, useState } from "react";
+import AuthContextProvider, { AuthContext } from "./store/AuthContext";
+import { useContext, useEffect, useState } from "react";
 import { NativeBaseProvider } from "native-base";
 
 import { useFonts } from "expo-font";
@@ -20,13 +22,15 @@ import { StreamChat } from "stream-chat";
 
 import { OverlayProvider, Chat } from "stream-chat-expo";
 
-
-
 const API_KEY = "xas8ht3tagya";
+const API_SECRET="pm73b5snrcht3cqh79vab4yu43mhkkjwbbuxprq76g7tpjfg4fyzh22gdcffeqhc"
 const client = StreamChat.getInstance(API_KEY);
 
-
 export default function App() {
+  const authCtx = useContext(AuthContext);
+
+  const idUser = authCtx.id.toString();
+console.log(idUser)
   const activeIndex = useSharedValue(0);
 
   const flingUp = Gesture.Fling()
@@ -45,64 +49,53 @@ export default function App() {
     "sharp-sans": require("./assets/fonts/SharpSansNo1-Bold.ttf"),
   });
 
+  // useEffect(() => {
+  //   // connect the user
+  //   // console.log(idUser);
 
+  //   const connectUser = async () => {
+  //     const token = await AsyncStorage.getItem("token");
+  //     console.log(token);
 
+  //     await client.connectUser(
+  //       {
+  //         id: '1000',
+  //         name: `${authCtx.username}`,
+  //         image: "https://i.imgur.com/fR9Jz14.png",
+  //       },
+  //       client.devToken('1000')
+  //     );
+  //     const channel = client.channel("livestream", "public", {
+  //       name: "Public",
+  //       // image: 'https://i.imgur.com/fR9Jz14.png',
+  //     });
+  //     await channel.create();
+  //   };
+  //   connectUser();
 
-
-
-  useEffect(() => {
-    // connect the user
-
-    const connectUser = async () => {
-      await client.connectUser(
-        {
-          id: "sado",
-          name: "sado",
-          image: "https://i.imgur.com/fR9Jz14.png",
-        },
-        client.devToken("sado")
-      );
-      const channel = client.channel("livestream", "public", {
-        name: "Public",
-        // image: 'https://i.imgur.com/fR9Jz14.png',
-      });
-      await channel.create();
-    };
-    connectUser();
-
-    return () => {
-      client.disconnectUser();
-    };
-  }, []);
-
-
-
-
-
-
-
-
-
+  //   return () => {
+  //     client.disconnectUser();
+  //   };
+  // }, []);
 
   return (
     <OverlayProvider>
-    <Chat client={client}>
-    <NativeBaseProvider>
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <>
-          <StatusBar style="light" />
-          <Provider store={store}>
-            <UserLocationProvider>
-              <AuthContextProvider>
-                <RootStack />
-              </AuthContextProvider>
-            </UserLocationProvider>
-          </Provider>
-        </>
-      </GestureHandlerRootView>
-    </NativeBaseProvider>
-
-    </Chat>
+      <Chat client={client}>
+        <NativeBaseProvider>
+          <GestureHandlerRootView style={{ flex: 1 }}>
+            <>
+              <StatusBar style="light" />
+              <Provider store={store}>
+                <UserLocationProvider>
+                  <AuthContextProvider>
+                    <RootStack />
+                  </AuthContextProvider>
+                </UserLocationProvider>
+              </Provider>
+            </>
+          </GestureHandlerRootView>
+        </NativeBaseProvider>
+      </Chat>
     </OverlayProvider>
   );
 }

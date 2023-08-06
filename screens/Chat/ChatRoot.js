@@ -1,12 +1,15 @@
 import { View, Text, SafeAreaView } from "react-native";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Channel,
   ChannelList,
   MessageInput,
   MessageList,
+  useChatContext,
 } from "stream-chat-expo";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { AuthContext } from "../../store/AuthContext";
 
 const ChatRoot = () => {
   const [channel, setChannel] = useState();
@@ -20,8 +23,46 @@ const ChatRoot = () => {
       
     );
   }
+  const { client } = useChatContext();
 
+  const authCtx = useContext(AuthContext)
   const navigation= useNavigation()
+
+
+  useEffect(() => {
+    // connect the user
+
+    const connectUser = async () => {
+      const token = await AsyncStorage.getItem("token");
+      console.log(token);
+      const idUser = authCtx.id.toString();
+      console.log(" l'id de l'user :  ",idUser);
+
+      await client.connectUser(
+        {
+          id: authCtx.id.toString(),
+          name: `${authCtx.username}`,
+          image: "https://i.imgur.com/fR9Jz14.png",
+        },
+        client.devToken(authCtx.id.toString())
+      );
+      const channel = client.channel("livestream", "public", {
+        name: "Public",
+        // image: 'https://i.imgur.com/fR9Jz14.png',
+      });
+      await channel.create();
+    };
+    connectUser();
+
+    return () => {
+      client.disconnectUser();
+    };
+  }, []);
+
+
+
+
+
 
   return (
     <SafeAreaView

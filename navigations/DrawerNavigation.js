@@ -25,6 +25,7 @@ import { ProfileScreen } from "../screens";
 import { Avatar } from "native-base";
 import { AuthContext } from "../store/AuthContext";
 import OrderList from "../screens/Delivery/OrderList";
+import ChatRoot from "../screens/Chat/ChatRoot";
 
 const Profil = assets.Profil;
 
@@ -151,6 +152,16 @@ const DrawerNavigation = () => {
           ),
         }}
         component={ProfileScreen}
+      />
+      <Drawer.Screen
+        name="ChatRoot"
+        options={{
+          headerShown: false,
+          title: "My chat",
+          drawerIcon: () => (
+<Ionicons name="ios-chatbubble-ellipses-sharp" size={24} color="#808080" />          ),
+        }}
+        component={ChatRoot}
       />
     </Drawer.Navigator>
   );

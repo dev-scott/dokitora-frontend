@@ -24,6 +24,8 @@ import {
 } from "react-native-gesture-handler";
 import { useSharedValue, withTiming } from "react-native-reanimated";
 import Header from "../../components/UI/Header";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useChatContext } from "stream-chat-expo";
 
 const Profil = assets.Profil;
 
@@ -151,8 +153,10 @@ const HomeScreen = ({navigation}) => {
   function submitLogout() {
     authCtx.logout();
   }
+  const { client } = useChatContext();
 
   const username = authCtx.username;
+  // const id = authCtx.id;
 
   const token = authCtx.token;
 
@@ -183,6 +187,41 @@ const HomeScreen = ({navigation}) => {
       }),
     });
   }
+
+
+  
+  // useEffect(() => {
+  //   // connect the user
+
+  //   const connectUser = async () => {
+  //     const token = await AsyncStorage.getItem("token");
+  //     console.log(token);
+  //     const idUser = authCtx.id.toString();
+  //     console.log(" l'id de l'user :  ",idUser);
+
+  //     await client.connectUser(
+  //       {
+  //         id: authCtx.id.toString(),
+  //         name: `${authCtx.username}`,
+  //         image: "https://i.imgur.com/fR9Jz14.png",
+  //       },
+  //       client.devToken(authCtx.id.toString())
+  //     );
+  //     const channel = client.channel("livestream", "public", {
+  //       name: "Public",
+  //       // image: 'https://i.imgur.com/fR9Jz14.png',
+  //     });
+  //     await channel.create();
+  //   };
+  //   connectUser();
+
+  //   return () => {
+  //     client.disconnectUser();
+  //   };
+  // }, []);
+
+
+
 
   return (
     <GestureDetector gesture={Gesture.Exclusive(flingUp, flingDown)}>
@@ -215,7 +254,7 @@ const HomeScreen = ({navigation}) => {
             Bonjour {username}
           </Text>
           <Text className="text-white text-[28px] font-semibold leading-[37.80px] mt-[24px] ">
-            Comment allez-vous aujourd’hui ?{" "}
+            Comment allez-vous aujourd’hui ? {authCtx.id} {authCtx.username  }  
           </Text>
           <View className="flex gap-x-3 justify-start items-start flex-row  mt-[24px] ">
             <Pressable className="bg-white20  flex flex-row items-center justify-start  p-1 rounded-3xl">
