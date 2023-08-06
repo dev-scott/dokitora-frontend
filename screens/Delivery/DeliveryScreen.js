@@ -7,7 +7,7 @@ import {
   Image,
   Linking,
 } from "react-native";
-import React, { useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { featured } from "../../constants/dummyData";
 import MapView, { Marker } from "react-native-maps";
@@ -16,10 +16,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectpharmacy } from "../../slices/pharmacySlice";
 import { emptyCart } from "../../slices/cartSlice";
 import * as Notifications from "expo-notifications";
+import { useChatContext } from "stream-chat-expo";
+import { AuthContext } from "../../store/AuthContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getDeliveryPerson } from "../../utils/api";
+import { Ionicons } from '@expo/vector-icons'; 
 
 const DeliveryScreen = () => {
+
+  const [deliveryPerson , setDeliveryPerson] = useState([])
+
+
   const pharmacy = useSelector(selectpharmacy);
   const navigation = useNavigation();
+  const authCtx = useContext(AuthContext);
+  const { client } = useChatContext();
 
   const dispatch = useDispatch();
 
@@ -35,6 +46,72 @@ const DeliveryScreen = () => {
       Linking.openURL("tel:657704439");
     }
   };
+
+
+
+
+  const startChannel = async () => {
+    const channel = client.channel("messaging", {
+      members: [deliveryPerson.id.toString(), authCtx.id.toString()],
+    });
+    await channel.watch();
+
+    // router.push(`/chat/channel/${channel.id}`);
+    navigation.navigate("ChannelDetail", { id: channel.id });
+  };
+
+
+
+
+  
+  useEffect(() => {
+    // connect the user
+
+    const connectUser = async () => {
+      const token = await AsyncStorage.getItem("token");
+      console.log(token);
+      const idUser = authCtx.id.toString();
+      console.log(" l'id de l'user :  ",idUser);
+
+      await client.connectUser(
+        {
+          id: authCtx.id.toString(),
+          name: `${authCtx.username}`,
+          image: "https://i.imgur.com/fR9Jz14.png",
+        },
+        client.devToken(authCtx.id.toString())
+      );
+      const channel = client.channel("livestream", "public", {
+        name: "Public",
+        // image: 'https://i.imgur.com/fR9Jz14.png',
+      });
+      await channel.create();
+    };
+    connectUser();
+
+    return () => {
+      client.disconnectUser();
+    };
+  }, []);
+
+
+  useEffect(() => {
+    getDelivery();
+  }, []);
+
+
+  const getDelivery = async () => {
+    const result = (await getDeliveryPerson()).data;
+
+    const resp = result.data;
+
+    console.log(resp);
+    setDeliveryPerson(resp);
+  };
+
+
+
+
 
   return (
     <SafeAreaView
@@ -95,7 +172,7 @@ const DeliveryScreen = () => {
           </View>
 
           <View className="flex-1 ml-3">
-            <Text className="text-lg font-bold text-white">Syed Noman</Text>
+            <Text className="text-lg font-bold text-white">{deliveryPerson.username}</Text>
             <Text className="text-white font-semibold">Your Rider</Text>
           </View>
           <View className="flex-row items-center space-x-3 mr-3">
@@ -107,10 +184,10 @@ const DeliveryScreen = () => {
             </TouchableOpacity>
 
             <TouchableOpacity
-              onPress={handleCancel}
+              onPress={startChannel}
               className="bg-zin800 p-2 rounded-full"
             >
-              <Icon.X stroke={"white"} strokeWidth="5" />
+<Ionicons name="ios-chatbubble-ellipses-sharp" size={24} color="white" />
             </TouchableOpacity>
           </View>
         </View>

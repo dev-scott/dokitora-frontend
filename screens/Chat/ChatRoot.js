@@ -59,7 +59,11 @@ const ChatRoot = () => {
     };
   }, []);
 
-
+  const isPrivate = {
+    type: 'messaging',
+    members: { $in: [authCtx.id.toString()] },
+  };
+  const isPublic = { type: 'livestream' };
 
 
 
@@ -69,9 +73,13 @@ const ChatRoot = () => {
       className="bg-white flex-1 relative px-[16px] pt-[44px] pb-8 "
       pointerEvents="box-none"
     >
-      <ChannelList onSelect={(channel) => navigation.navigate("ChannelDetail" , { id:channel.id , idTest:"id" }) } />
+      <ChannelList
+      filters={{ $or: [isPrivate, isPublic] }}
+      onSelect={(channel) => navigation.navigate("ChannelDetail" , { id:channel.id , idTest:"id" }) } />
     </SafeAreaView>
   );
+
+  
 };
 
 export default ChatRoot;

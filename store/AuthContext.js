@@ -16,9 +16,11 @@ export const AuthContext = createContext({
   date:"",
   role:"",
   id:"",
+  description:"",
   updateUserInfo:(username)={},
   updateUserEmail:(email)={},
   updateUserId:(id)={},
+  updateUserDescription:(description)={},
 
 
 });
@@ -36,6 +38,7 @@ function AuthContextProvider({ children }) {
   const [date , setDate]= useState("")
   const [role , setRole]= useState("")
   const [id , setId]= useState("")
+  const [description , setDescription]= useState("")
 
   function authenticate(token) {
     setIsLoadingAuth(true);
@@ -45,6 +48,11 @@ function AuthContextProvider({ children }) {
     AsyncStorage.setItem("email",email);  
 
     setIsLoadingAuth(false);
+  }
+
+
+  function updateUserDescription(description){
+    setDescription(description);
   }
 
   function updateUserInfo(username){
@@ -77,9 +85,12 @@ function AuthContextProvider({ children }) {
     role:role,
     date:date,
     id:id,
+    description:description,
     updateUserInfo:updateUserInfo,
     updateUserEmail:updateUserEmail,
-    updateUserId:updateUserId
+    updateUserId:updateUserId,
+    updateUserDescription:updateUserDescription
+
 
 
 
