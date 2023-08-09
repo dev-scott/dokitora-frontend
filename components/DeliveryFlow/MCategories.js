@@ -20,7 +20,7 @@ const MCategories = () => {
             {categories.map((category , index)=>{
 
 let isActive = category.id==activeCategory;
-let btnClass = isActive? ' bg-slate950': ' bg-gray-200';
+let btnClass = isActive? ' bg-primary': ' bg-gray-200';
 let textClass = isActive? ' font-semibold text-white': ' text-gray-500';
 
 

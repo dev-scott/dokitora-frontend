@@ -26,6 +26,7 @@ import { Avatar } from "native-base";
 import { AuthContext } from "../store/AuthContext";
 import OrderList from "../screens/Delivery/OrderList";
 import ChatRoot from "../screens/Chat/ChatRoot";
+import DeliveryList from "../screens/OnlyDeliveryDrivers/DeliveryList";
 
 const Profil = assets.Profil;
 
@@ -42,7 +43,7 @@ function CustomDrawerContent(props) {
   const email = authCtx.email;
 
   return (
-    <View className="flex-1">
+    <View className="flex flex-1">
       <DrawerContentScrollView className="" {...props}>
         <SafeAreaView className="flex relative flex-1  ">
           {/* <View
@@ -116,6 +117,8 @@ function CustomDrawerContent(props) {
 }
 
 const DrawerNavigation = () => {
+  const authCtx = useContext(AuthContext);
+
   return (
     <Drawer.Navigator
       drawerContent={(props) => <CustomDrawerContent {...props} />}
@@ -153,13 +156,33 @@ const DrawerNavigation = () => {
         }}
         component={ProfileScreen}
       />
+
+      {authCtx.deliveryUser ? (
+        <Drawer.Screen
+          name="DeliveryList"
+          options={{
+            headerShown: false,
+            title: "Vos livraison",
+            drawerIcon: () => (
+              <Ionicons name="person" size={24} color="#808080" />
+            ),
+          }}
+          component={DeliveryList}
+        />
+      ) : null}
+
       <Drawer.Screen
         name="ChatRoot"
         options={{
           headerShown: false,
           title: "My chat",
           drawerIcon: () => (
-<Ionicons name="ios-chatbubble-ellipses-sharp" size={24} color="#808080" />          ),
+            <Ionicons
+              name="ios-chatbubble-ellipses-sharp"
+              size={24}
+              color="#808080"
+            />
+          ),
         }}
         component={ChatRoot}
       />

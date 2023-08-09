@@ -20,12 +20,14 @@ import { useChatContext } from "stream-chat-expo";
 import { AuthContext } from "../../store/AuthContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getDeliveryPerson } from "../../utils/api";
-import { Ionicons } from '@expo/vector-icons'; 
+import { Ionicons } from "@expo/vector-icons";
+import { UserLocationContext } from "../../store/UserLocationContext";
 
 const DeliveryScreen = () => {
+  const [deliveryPerson, setDeliveryPerson] = useState([]);
+  const [mapRegion, setmapRegion] = useState([]);
 
-  const [deliveryPerson , setDeliveryPerson] = useState([])
-
+  const { location, setLocation } = useContext(UserLocationContext);
 
   const pharmacy = useSelector(selectpharmacy);
   const navigation = useNavigation();
@@ -47,9 +49,6 @@ const DeliveryScreen = () => {
     }
   };
 
-
-
-
   const startChannel = async () => {
     const channel = client.channel("messaging", {
       members: [deliveryPerson.id.toString(), authCtx.id.toString()],
@@ -60,10 +59,6 @@ const DeliveryScreen = () => {
     navigation.navigate("ChannelDetail", { id: channel.id });
   };
 
-
-
-
-  
   useEffect(() => {
     // connect the user
 
@@ -71,7 +66,7 @@ const DeliveryScreen = () => {
       const token = await AsyncStorage.getItem("token");
       console.log(token);
       const idUser = authCtx.id.toString();
-      console.log(" l'id de l'user :  ",idUser);
+      console.log(" l'id de l'user :  ", idUser);
 
       await client.connectUser(
         {
@@ -94,11 +89,9 @@ const DeliveryScreen = () => {
     };
   }, []);
 
-
   useEffect(() => {
     getDelivery();
   }, []);
-
 
   const getDelivery = async () => {
     const result = (await getDeliveryPerson()).data;
@@ -109,9 +102,16 @@ const DeliveryScreen = () => {
     setDeliveryPerson(resp);
   };
 
-
-
-
+  useEffect(() => {
+    if (location) {
+      setmapRegion({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+        latitudeDelta: 0.0422,
+        longitudeDelta: 0.0421,
+      });
+    }
+  }, [location]);
 
   return (
     <SafeAreaView
@@ -137,6 +137,8 @@ const DeliveryScreen = () => {
           description={pharmacy.description}
           // pinColor={themeColors.bgColor(1)}
         />
+
+        <Marker title="You" coordinate={mapRegion} pinColor={"blue"} />
       </MapView>
 
       <View className="rounded-t-3xl -mt-12 bg-white relative">
@@ -172,7 +174,9 @@ const DeliveryScreen = () => {
           </View>
 
           <View className="flex-1 ml-3">
-            <Text className="text-lg font-bold text-white">{deliveryPerson.username}</Text>
+            <Text className="text-lg font-bold text-white">
+              {deliveryPerson.username}
+            </Text>
             <Text className="text-white font-semibold">Your Rider</Text>
           </View>
           <View className="flex-row items-center space-x-3 mr-3">
@@ -187,7 +191,11 @@ const DeliveryScreen = () => {
               onPress={startChannel}
               className="bg-zin800 p-2 rounded-full"
             >
-<Ionicons name="ios-chatbubble-ellipses-sharp" size={24} color="white" />
+              <Ionicons
+                name="ios-chatbubble-ellipses-sharp"
+                size={24}
+                color="white"
+              />
             </TouchableOpacity>
           </View>
         </View>

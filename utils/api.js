@@ -12,6 +12,7 @@ const urlGetDoctorUsers = "http://192.168.1.105:1337/api/auth/getDoctorUser";
 
 const urlGetDeliveryPerson = "http://192.168.1.105:1337/api/auth/getDeliveryPerson"
 
+const urlGetListDeliveries = "http://192.168.1.105:1337/api/orders?populate=*"
 
 export async function getPharmacy() {
   const response = await axios.get(urlGetPharmacy);
@@ -93,4 +94,12 @@ export async function getDeliveryPerson() {
   const response = await axios.get(urlGetDeliveryPerson);
   console.log("response :" + response);
   return response;
+}
+
+export async function getListDeliveries(){
+
+  const responses = await axios.get(urlGetListDeliveries)
+  console.log("response : " + responses)
+  return responses;
+
 }

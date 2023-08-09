@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { View, SafeAreaView, StyleSheet, Image } from "react-native";
 import {
   Avatar,
@@ -15,13 +15,33 @@ import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AuthContext } from "../../store/AuthContext";
-import { Ionicons } from '@expo/vector-icons'; 
+import { Ionicons } from "@expo/vector-icons";
+import { getOrderByUser } from "../../utils/api";
 
 // import Share from 'react-native-share';
 
 // import files from '../../assets/filesBase64';
 
 const ProfileScreen = () => {
+  const [orders, setOrders] = useState([]);
+
+  useEffect(() => {
+    getOrders();
+  }, []);
+
+  const getOrders = async () => {
+    //   const token = getToken()
+    const result = await getOrderByUser();
+
+    const resp = result.data;
+
+    // console.log(resp);
+    setOrders(resp);
+  };
+  console.log(orders);
+
+  const numOrder = orders.length
+
   const navigation = useNavigation();
   const ArrowLeft = assets.ArrowLeft;
   const myCustomShare = async () => {
@@ -111,7 +131,7 @@ const ProfileScreen = () => {
           <Caption>Wallet</Caption>
         </View>
         <View style={styles.infoBox}>
-          <Title>12</Title>
+          <Title>{numOrder}</Title>
           <Caption>Orders</Caption>
         </View>
       </View>

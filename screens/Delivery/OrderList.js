@@ -51,7 +51,7 @@ const OrderList = ({ navigation }) => {
 
   return (
     <SafeAreaView
-      className="bg-slate950 flex-1 relative px-[16px] pt-[44px] pb-8 "
+      className="bg-primary flex-1 relative px-[16px] pt-[44px] pb-8 "
       pointerEvents="box-none"
     >
       <Header openDrawer={openDrawer}  />

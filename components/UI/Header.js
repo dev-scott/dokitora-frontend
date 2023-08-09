@@ -5,7 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 const Profil = assets.Profil;
 
-const LogoIcon = assets.LogoIcon;
+const LogoIcon = assets.Logo;
 
 const Bell = assets.Bell;
 

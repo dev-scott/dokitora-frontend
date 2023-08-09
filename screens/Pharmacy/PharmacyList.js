@@ -37,7 +37,7 @@ const PharmacyList = ({navigation}) => {
 
 
   return (
-    <SafeAreaView  className="bg-slate950 flex-1 relative px-[16px] pt-[44px] pb-8 ">
+    <SafeAreaView  className="bg-primary flex-1 relative px-[16px] pt-[44px] pb-8 ">
       <Header  />
       <GoogleMapView />
 

@@ -119,6 +119,10 @@ const EmailRegistration = ({navigation}) => {
       authCtx.authenticate(token);
       authCtx.updateUserInfo(user.username)
       authCtx.updateUserEmail(user.email)
+      authCtx.updateUserId(user.id)
+      authCtx.updateUserDescription(user.description)
+      authCtx.updateUserDelivery(user.isDelivery)
+
       
 
       

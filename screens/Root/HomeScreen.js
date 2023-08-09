@@ -226,7 +226,7 @@ const HomeScreen = ({navigation}) => {
   return (
     <GestureDetector gesture={Gesture.Exclusive(flingUp, flingDown)}>
       <SafeAreaView
-        className="bg-slate950 flex-1 relative px-[16px] pt-[44px] pb-8 "
+        className="bg-primary flex-1 relative px-[16px] pt-[44px] pb-8 "
         pointerEvents="box-none"
       >
         {/* <View className="flex w-full items-center justify-between flex-row ">
@@ -254,7 +254,7 @@ const HomeScreen = ({navigation}) => {
             Bonjour {username}
           </Text>
           <Text className="text-white text-[28px] font-semibold leading-[37.80px] mt-[24px] ">
-            Comment allez-vous aujourd’hui ? {authCtx.id} {authCtx.username  }  
+            Comment allez-vous aujourd’hui ? {authCtx.id} {authCtx.username  }  {authCtx.deliveryUser}
           </Text>
           <View className="flex gap-x-3 justify-start items-start flex-row  mt-[24px] ">
             <Pressable className="bg-white20  flex flex-row items-center justify-start  p-1 rounded-3xl">
@@ -273,6 +273,7 @@ const HomeScreen = ({navigation}) => {
         </View>
 
         <View className=" flex flex-1  items-center mt-[50px] ">
+          
           {data.map((c, index) => {
             return (
               <Card
@@ -285,6 +286,7 @@ const HomeScreen = ({navigation}) => {
               />
             );
           })}
+
         </View>
       </SafeAreaView>
     </GestureDetector>

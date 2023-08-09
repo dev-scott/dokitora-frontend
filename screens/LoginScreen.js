@@ -91,6 +91,7 @@ const LoginScreen = () => {
       authCtx.updateUserEmail(user.email)
       authCtx.updateUserId(user.id)
       authCtx.updateUserDescription(user.description)
+      authCtx.updateUserDelivery(user.isDelivery)
       
 
     } catch (error) {

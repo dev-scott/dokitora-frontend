@@ -6,7 +6,9 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "buildNumber": "1.0.0",
       "supportsTablet": true
@@ -17,12 +19,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.onetouchlabs.dokitora",
-      "config": {
-        "googleMaps": {
-          "apiKey": "AIzaSyAXL7RK5H0seVdIjpwxb970306YL8V-kmw"
-        }
-      }
+      "package": "com.onetouchlabs.dokitora"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -31,18 +28,12 @@
       [
         "expo-notifications",
         {
-          "icon": "./assets/icon.png",
+          "icon": "./local/assets/notification-icon.png",
           "color": "#ffffff",
           "sounds": [
             "./local/assets/notification-sound.wav",
             "./local/assets/notification-sound-other.wav"
           ]
-        }
-      ],
-      [
-        "expo-location",
-        {
-          "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
         }
       ]
     ],
