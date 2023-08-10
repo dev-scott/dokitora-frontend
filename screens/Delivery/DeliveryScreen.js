@@ -10,7 +10,7 @@ import {
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { featured } from "../../constants/dummyData";
-import MapView, { Marker } from "react-native-maps";
+import MapView, { Marker, Polyline } from "react-native-maps";
 import * as Icon from "react-native-feather";
 import { useDispatch, useSelector } from "react-redux";
 import { selectpharmacy } from "../../slices/pharmacySlice";
@@ -22,11 +22,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getDeliveryPerson } from "../../utils/api";
 import { Ionicons } from "@expo/vector-icons";
 import { UserLocationContext } from "../../store/UserLocationContext";
+import Svg, { Circle } from 'react-native-svg';
 
 const DeliveryScreen = () => {
   const [deliveryPerson, setDeliveryPerson] = useState([]);
   const [mapRegion, setmapRegion] = useState([]);
-
+  const [listCoordinates, setListCoordinate] = useState([]);
   const { location, setLocation } = useContext(UserLocationContext);
 
   const pharmacy = useSelector(selectpharmacy);
@@ -110,8 +111,30 @@ const DeliveryScreen = () => {
         latitudeDelta: 0.0422,
         longitudeDelta: 0.0421,
       });
+
+     
     }
   }, [location]);
+
+  useEffect(()=>{
+
+    setListCoordinate([
+      {
+        latitude: pharmacy.latitude,
+        longitude: pharmacy.longitude,
+      },
+      {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      },
+    ]);
+
+    setListCoordinate([
+      { latitude: 37.78825, longitude: -122.4324 }, // Coordonnées du premier marqueur (point de départ)
+      { latitude: 37.3352 , longitude: -122.0324 }, // Coordonnées du deuxième marqueur (point d'arrivée)
+    ]);
+
+  },[])
 
   return (
     <SafeAreaView
@@ -139,6 +162,10 @@ const DeliveryScreen = () => {
         />
 
         <Marker title="You" coordinate={mapRegion} pinColor={"blue"} />
+
+        <Polyline coordinates={listCoordinates} strokeWidth={4} strokeColor="blue" />
+
+
       </MapView>
 
       <View className="rounded-t-3xl -mt-12 bg-white relative">

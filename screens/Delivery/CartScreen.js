@@ -134,18 +134,19 @@ const CartScreen = () => {
     const order_date = new Date().toLocaleDateString();
     const order_pharmacy= pharmacy.title
     const order_price= cartTotal+deliveryFee
+    const order_pharmacy_number = pharmacy.phone
     // console.log(order_email);
 
-
+    authCtx.updateUserOrderId(order_price)
 
 
 
     scheduleNotificationHandler();
 
-    createOrder({ order_name, order_email , order_phone , order_date , order_pharmacy ,order_price});
+    createOrder({ order_name, order_email , order_phone , order_date , order_pharmacy ,order_price,order_pharmacy_number});
   }
 
-  async function createOrder({ order_name, order_email , order_phone , order_date , order_pharmacy ,order_price}) {
+  async function createOrder({ order_name, order_email , order_phone , order_date , order_pharmacy ,order_price,order_pharmacy_number}) {
     // console.log(enteredEmail, enterePassword);
 // console.log(order_name, order_email , order_phone , order_date , order_pharmacy);
     setIsLoading(true);
@@ -156,7 +157,8 @@ const CartScreen = () => {
         order_phone,
         order_date,
         order_pharmacy,
-        order_price
+        order_price,
+        order_pharmacy_number
       );
     } catch (error) {
       console.log(error);

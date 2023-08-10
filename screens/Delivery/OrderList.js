@@ -1,16 +1,50 @@
-import { View, Text, SafeAreaView, ScrollView } from "react-native";
-import React, { useEffect, useState } from "react";
+import { View, Text, SafeAreaView, ScrollView, TextInput } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
 import Header from "../../components/UI/Header";
 import {  getOrderByUser } from "../../utils/api";
 import OrderCard from "../../components/DeliveryFlow/OrderCard";
-// import { getToken } from "../../utils/helpers";
+// impimport { Ionicons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
+import { Entypo } from '@expo/vector-icons'; 
+import { selectmyOrder, setMyOrder } from "../../slices/orderSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { AuthContext } from "../../store/AuthContext";
+import { useFocusEffect } from '@react-navigation/native';
+
 
 const OrderList = ({ navigation }) => {
   const [orders, setOrders] = useState([]);
 
-  useEffect(() => {
-      getOrders();
-    }, []);
+  const authCtx = useContext(AuthContext)
+
+  console.log(authCtx.orderId)
+
+  const dispatch = useDispatch()
+
+  // useEffect(() => {
+
+      
+  //     return () => {
+  //       console.log('cleaned up');
+    
+  //     }
+  //   }, []);
+
+
+    useFocusEffect(
+      React.useCallback(() => {
+        
+        getOrders();
+
+    
+        return () => {
+          
+          // Code de nettoyage si nécessaire
+          // Ce code sera appelé lorsqu'on quitte cet écran ou qu'il perd le focus
+        };
+      }, [])
+    );
+    
     
     const getOrders = async () => {
     //   const token = getToken()
@@ -20,29 +54,15 @@ const OrderList = ({ navigation }) => {
 
     // console.log(resp);
     setOrders(resp);
+
+    dispatch(setMyOrder(resp));
+
+
   };
   console.log(orders)
 //   // console.log(pharmacyData.attributes)
 
 
-// const [orders, setOrders] = useState([]);
-
-// useEffect(() => {
-//     getOrders();
-// }, []);
-
-// const getOrders = async () => {
-//   const result = (await getOrderByUser()).data;
-
-//   const resp = result.data;
-
-//   console.log(resp);
-//   setOrders(resp);
-// };
-// console.log(blogs);
-// console.log(pharmacyData.attributes)
-
-// const navigation = useNavigation()
 
 
   const openDrawer = () => {
@@ -56,25 +76,63 @@ const OrderList = ({ navigation }) => {
     >
       <Header openDrawer={openDrawer}  />
 
-      <View className="mt-[25px]">
-        <Text className="text-white text-[28px] font-semibold leading-[37.80px] mt-[4px] ">
-          Historique de vos commandes
+      <View className="mt-5" >
+        <View
+          className="bg-white"
+          style={{
+            display: "flex",
+            marginTop: 5,
+            flexDirection: "row",
+            padding: 10,
+            gap: 5,
+            elevation: 0.7,
+            alignItems: "center",
+
+            borderRadius: 5,
+          }}
+        >
+          <Ionicons className="bg-white" name="search" size={24} />
+          <TextInput
+            className="bg-white"
+            placeholder="Search"
+            style={{ width: "80%" }}
+            onChangeText={(value) => setSearchInput(value)}
+            onSubmitEditing={() => setSearchText(searchInput)}
+          />
+        </View>
+      </View>
+
+
+
+
+
+
+      <View className="mt-[25px] pr-2 flex justify-between items-center flex-row ">
+        <Text className="text-white text-[18px] font-semibold leading-[37.80px] mt-[4px] ">
+          Vos commandes {authCtx.orderId}
         </Text>
+        <Entypo name="dots-three-horizontal" size={24} color="white" />
+        </View>
+
+
         <ScrollView
         vertical
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{
           paddingHorizontal: 0,
         }}
-        className="overflow-visible py-5"
+        className="overflow-hidden py-5"
       >
         {orders.map((order , index)=>(
-            <OrderCard key={index} name={order.name} phone={order.phone} date={order.date} email={order.email} pharmacy_name={order.pharmacy_name} order_price={order.order_price} onder_confirm={order.confirmed} id={order.id} />
+            <OrderCard key={index} name={order.name} phone={order.phone} date={order.date} email={order.email} pharmacy_name={order.pharmacy_name} order_price={order.order_price} onder_confirm={order.confirmed} id={order.id} order_pharmacy_number={order.order_pharmacy_number} />
             ))}
             {/* <Text className="text-white">ddd</Text> */}
 
         </ScrollView>
-      </View>
+
+
+
+
     </SafeAreaView>
   );
 };

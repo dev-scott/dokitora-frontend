@@ -1,15 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  myOrder: {
+  myOrder:
+  [ {
+    id:null,
     name:null,
     phone:null,
     date:null,
     email:null,
     pharmacy_name:null,
     order_price:null,
-    onder_confirm:null,
+    confirmed:null,
+    order_pharmacy_number:null,
   }
+]
 }
 
 export const myOrderSlice = createSlice({

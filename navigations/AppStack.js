@@ -25,6 +25,8 @@ import Layout from "../screens/Chat/LayoutRoot";
 import LayoutRoot from "../screens/Chat/LayoutRoot";
 import NewChat from "../screens/Chat/NewChat";
 import DoctorDetail from "../screens/Doctor/DoctorDetail";
+import DeliveryDetail from "../screens/OnlyDeliveryDrivers/DeliveryDetail";
+import OrderDetail from "../screens/Delivery/OrderDetail";
 
 const Stack = createStackNavigator();
 
@@ -115,9 +117,20 @@ const AppStack = () => {
         />
   
         <Stack.Screen
+          name="DeliveryDetail"
+          options={{ presentation: "fullScreenModal", headerShown: false }}
+          component={DeliveryDetail}
+        />
+  
+        <Stack.Screen
           name="ChannelDetail"
           options={{ presentation: "fullScreenModal", headerShown: false }}
           component={ChannelDetail}
+        />
+        <Stack.Screen
+          name="OrderDetail"
+          options={{ presentation: "fullScreenModal", headerShown: false }}
+          component={OrderDetail}
         />
       </Stack.Navigator>
     </NavigationContainer>

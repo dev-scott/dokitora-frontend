@@ -16,6 +16,7 @@ export const AuthContext = createContext({
   date:"",
   role:"",
   id:"",
+  orderId:null,
   description:"",
   deliveryUser:null,
   updateUserInfo:(username)={},
@@ -23,6 +24,9 @@ export const AuthContext = createContext({
   updateUserId:(id)={},
   updateUserDescription:(description)={},
   updateUserDelivery:(deliveryUser)={},
+  updateUserOrderId:(orderId)={},
+
+
 
 
 });
@@ -43,6 +47,7 @@ function AuthContextProvider({ children }) {
   const [description , setDescription]= useState("")
 
   const [deliveryUser , setDeliveryUser]= useState(null)
+  const [orderId , setOrderId]= useState("")
 
   function authenticate(token) {
     setIsLoadingAuth(true);
@@ -76,6 +81,10 @@ function AuthContextProvider({ children }) {
 
   }
 
+  function updateUserOrderId(orderId){
+    setOrderId(orderId + 1)
+  }
+
   function logout() {
     setAuthToken(null);
     AsyncStorage.removeItem("token");
@@ -97,11 +106,13 @@ function AuthContextProvider({ children }) {
     id:id,
     description:description,
     deliveryUser:deliveryUser,
+    orderId:orderId,
     updateUserInfo:updateUserInfo,
     updateUserEmail:updateUserEmail,
     updateUserId:updateUserId,
     updateUserDescription:updateUserDescription,
-    updateUserDelivery:updateUserDelivery
+    updateUserDelivery:updateUserDelivery,
+    updateUserOrderId:updateUserOrderId
 
 
 

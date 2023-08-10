@@ -26,7 +26,7 @@ const DeliveryListItem = ({ delivery }) => {
   //   };
 
   const detailFunction = () => {
-    navigation.navigate("DoctorDetail", { delivery: delivery });
+    navigation.navigate("DeliveryDetail", { delivery: delivery });
   };
 
   const Doctor = assets.Doctor;
