@@ -15,6 +15,10 @@ import { useFocusEffect } from '@react-navigation/native';
 const OrderList = ({ navigation }) => {
   const [orders, setOrders] = useState([]);
 
+  const [ordersFilter , setOrdersFilter] = useState([]);
+
+  const [search , setSearch]= useState('');
+
   const authCtx = useContext(AuthContext)
 
   console.log(authCtx.orderId)
@@ -54,6 +58,7 @@ const OrderList = ({ navigation }) => {
 
     // console.log(resp);
     setOrders(resp);
+    setOrdersFilter(resp)
 
     dispatch(setMyOrder(resp));
 
@@ -63,7 +68,22 @@ const OrderList = ({ navigation }) => {
 //   // console.log(pharmacyData.attributes)
 
 
+  const searchFilter = (value)=>{
 
+    if(value){
+      const newData = orders.filter((item)=>{
+        const itemData = item.name ? item.name.toUpperCase() : ''.toUpperCase();
+        const valueData = value.toUpperCase();
+        return itemData.indexOf(valueData)>-1
+      });
+      setOrdersFilter(newData);
+      setSearch(value);
+    }else {
+      setOrdersFilter(orders);
+      setSearch(value)
+    }
+
+  }
 
   const openDrawer = () => {
     navigation.openDrawer();
@@ -96,8 +116,10 @@ const OrderList = ({ navigation }) => {
             className="bg-white"
             placeholder="Search"
             style={{ width: "80%" }}
-            onChangeText={(value) => setSearchInput(value)}
-            onSubmitEditing={() => setSearchText(searchInput)}
+            value={search}
+
+            onChangeText={(value) => searchFilter(value)}
+            // onSubmitEditing={() => setSearchText(searchInput)}
           />
         </View>
       </View>
@@ -123,7 +145,7 @@ const OrderList = ({ navigation }) => {
         }}
         className="overflow-hidden py-5"
       >
-        {orders.map((order , index)=>(
+        {ordersFilter.map((order , index)=>(
             <OrderCard key={index} name={order.name} phone={order.phone} date={order.date} email={order.email} pharmacy_name={order.pharmacy_name} order_price={order.order_price} onder_confirm={order.confirmed} id={order.id} order_pharmacy_number={order.order_pharmacy_number} />
             ))}
             {/* <Text className="text-white">ddd</Text> */}

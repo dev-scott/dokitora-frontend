@@ -112,26 +112,28 @@ const DeliveryScreen = () => {
         longitudeDelta: 0.0421,
       });
 
+      console.log(location)
+
      
     }
   }, [location]);
 
   useEffect(()=>{
 
-    setListCoordinate([
-      {
-        latitude: pharmacy.latitude,
-        longitude: pharmacy.longitude,
-      },
-      {
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
-      },
-    ]);
+    // setListCoordinate([
+    //   {
+    //     latitude: pharmacy.latitude,
+    //     longitude: pharmacy.longitude,
+    //   },
+    //   {
+    //     latitude: location.coords.latitude,
+    //     longitude: location.coords.longitude,
+    //   },
+    // ]);
 
     setListCoordinate([
-      { latitude: 37.78825, longitude: -122.4324 }, // Coordonnées du premier marqueur (point de départ)
-      { latitude: 37.3352 , longitude: -122.0324 }, // Coordonnées du deuxième marqueur (point d'arrivée)
+      { latitude: pharmacy.lat, longitude: pharmacy.lng }, // Coordonnées du premier marqueur (point de départ)
+      { latitude: location.coords.latitude , longitude: location.coords.longitude }, // Coordonnées du deuxième marqueur (point d'arrivée)
     ]);
 
   },[])

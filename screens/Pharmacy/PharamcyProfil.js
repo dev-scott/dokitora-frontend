@@ -114,7 +114,7 @@ const PharamcyProfil = () => {
           className="bg-indigo600 "
         >
          <Ionicons name="md-share-outline" size={24} color="white" />
-          <Text style={{ fontFamily: "raleway", fontSize: 16 }} className="text-white" >Share</Text>
+          <Text style={{ fontSize: 16 }} className="text-white" >Share</Text>
         </TouchableOpacity>
         </View>
 

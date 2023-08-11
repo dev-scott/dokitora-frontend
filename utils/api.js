@@ -30,7 +30,8 @@ export async function addOrder(
   order_date,
   order_pharmacy,
   order_price,
-  order_pharmacy_number
+  order_pharmacy_number,
+  pushToken
 ) {
   console.log(
     order_name,
@@ -39,7 +40,8 @@ export async function addOrder(
     order_date,
     order_pharmacy,
     order_price,
-    order_pharmacy_number
+    order_pharmacy_number,
+    pushToken
   );
   // console.log(order_name , order_email , order_phone , order_date , order_pharmacy);
   const response = await axios.post(urlAddOrder, {
@@ -50,7 +52,8 @@ export async function addOrder(
       date: order_date,
       pharmacy_name: order_pharmacy,
       order_price: order_price,
-      order_pharmacy_number:order_pharmacy_number
+      order_pharmacy_number:order_pharmacy_number,
+      pushToken:pushToken
     },
   });
   console.log("test add order");

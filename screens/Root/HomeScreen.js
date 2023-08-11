@@ -26,6 +26,7 @@ import { useSharedValue, withTiming } from "react-native-reanimated";
 import Header from "../../components/UI/Header";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useChatContext } from "stream-chat-expo";
+import { getListDeliveries } from "../../utils/api";
 
 const Profil = assets.Profil;
 
@@ -51,6 +52,7 @@ const duration = 300;
 const HomeScreen = ({navigation}) => {
 
   const [valueForCard , setValueForCard] = useState("")
+  const [deliveries, setDeliveries] = useState([]);
 
   const activeIndex = useSharedValue(0);
 
@@ -142,6 +144,10 @@ const HomeScreen = ({navigation}) => {
     };
   }, []);
 
+
+
+
+
   // const navigation = useNavigation();
 
   const authCtx = useContext(AuthContext);
@@ -189,36 +195,28 @@ const HomeScreen = ({navigation}) => {
   }
 
 
-  
-  // useEffect(() => {
-  //   // connect the user
 
-  //   const connectUser = async () => {
-  //     const token = await AsyncStorage.getItem("token");
-  //     console.log(token);
-  //     const idUser = authCtx.id.toString();
-  //     console.log(" l'id de l'user :  ",idUser);
+  useEffect(() => {
+    getDeliveries();
 
-  //     await client.connectUser(
-  //       {
-  //         id: authCtx.id.toString(),
-  //         name: `${authCtx.username}`,
-  //         image: "https://i.imgur.com/fR9Jz14.png",
-  //       },
-  //       client.devToken(authCtx.id.toString())
-  //     );
-  //     const channel = client.channel("livestream", "public", {
-  //       name: "Public",
-  //       // image: 'https://i.imgur.com/fR9Jz14.png',
-  //     });
-  //     await channel.create();
-  //   };
-  //   connectUser();
+    if(authCtx.deliveryUser ){
 
-  //   return () => {
-  //     client.disconnectUser();
-  //   };
-  // }, []);
+      sendPushNotificationHandler()
+    
+
+  }
+
+  }, []);
+
+  const getDeliveries = async () => {
+    const result = (await getListDeliveries()).data;
+
+    const resp = result.data;
+
+    console.log(resp);
+    setDeliveries(resp);
+  };
+
 
 
 

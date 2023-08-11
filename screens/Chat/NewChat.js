@@ -19,6 +19,8 @@ const NewChat = () => {
   const [searchInput, setSearchInput] = useState();
 
   const [doctor, setDoctor] = useState([]);
+  const [filter , setFilter] = useState([]);
+  const [search , setSearch] = useState([])
 
   const authCtx = useContext(AuthContext);
   const { client } = useChatContext();
@@ -64,7 +66,28 @@ const NewChat = () => {
 
     console.log(resp);
     setDoctor(resp);
+    setFilter(resp);
   };
+
+
+
+  const searchFilter = (value)=>{
+
+    if(value){
+      const newData = doctor.filter((item)=>{
+        const itemData = item.username ? item.username.toUpperCase() : ''.toUpperCase();
+        const valueData = value.toUpperCase();
+        return itemData.indexOf(valueData)>-1
+      });
+      setFilter(newData);
+      setSearch(value);
+    }else {
+      setFilter(doctor);
+      setSearch(value)
+    }
+
+  }
+
 
   return (
     <SafeAreaView
@@ -91,13 +114,14 @@ const NewChat = () => {
             className="bg-white"
             placeholder="Search"
             style={{ width: "80%" }}
-            onChangeText={(value) => setSearchInput(value)}
-            onSubmitEditing={() => setSearchText(searchInput)}
+            value={search}
+            onChangeText={(value) => searchFilter(value)}
+            // onSubmitEditing={() => setSearchText(searchInput)}
           />
         </View>
       </View>
       <FlatList className="mt-3"
-        data={doctor}
+        data={filter}
         renderItem={({ item }) => <UserListItem user={item} />}
       />
     </SafeAreaView>

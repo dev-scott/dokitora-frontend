@@ -25,7 +25,7 @@ import { AuthContext } from "../../store/AuthContext";
 const CartScreen = () => {
   const [groupedItems, setGroupedItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-
+  const [pushTokenData , setPushTokenData] = useState("");
   const cartItems = useSelector(selectCartItems);
   const cartTotal = useSelector(selectCartTotal);
 
@@ -72,10 +72,11 @@ const CartScreen = () => {
         return;
       }
 
-      const pushTokenData = await Notifications.getExpoPushTokenAsync({
+      const pushToken = await Notifications.getExpoPushTokenAsync({
         projectId: "ba564e9b-fe1e-4b24-9fac-13eb619fb567",
       });
-      console.log(pushTokenData);
+      console.log(pushToken);
+      setPushTokenData(pushToken.data);
 
       if (Platform.OS === "android") {
         Notifications.setNotificationChannelAsync("default", {
@@ -135,6 +136,7 @@ const CartScreen = () => {
     const order_pharmacy= pharmacy.title
     const order_price= cartTotal+deliveryFee
     const order_pharmacy_number = pharmacy.phone
+    const pushToken = pushTokenData
     // console.log(order_email);
 
     authCtx.updateUserOrderId(order_price)
@@ -143,10 +145,10 @@ const CartScreen = () => {
 
     scheduleNotificationHandler();
 
-    createOrder({ order_name, order_email , order_phone , order_date , order_pharmacy ,order_price,order_pharmacy_number});
+    createOrder({ order_name, order_email , order_phone , order_date , order_pharmacy ,order_price,order_pharmacy_number , pushToken});
   }
 
-  async function createOrder({ order_name, order_email , order_phone , order_date , order_pharmacy ,order_price,order_pharmacy_number}) {
+  async function createOrder({ order_name, order_email , order_phone , order_date , order_pharmacy ,order_price,order_pharmacy_number , pushToken}) {
     // console.log(enteredEmail, enterePassword);
 // console.log(order_name, order_email , order_phone , order_date , order_pharmacy);
     setIsLoading(true);
@@ -158,7 +160,8 @@ const CartScreen = () => {
         order_date,
         order_pharmacy,
         order_price,
-        order_pharmacy_number
+        order_pharmacy_number,
+        pushToken
       );
     } catch (error) {
       console.log(error);
@@ -184,7 +187,7 @@ const CartScreen = () => {
             <Icon.ArrowLeft strokeWidth={3} stroke="white" />
           </TouchableOpacity>
           <View>
-            <Text className="text-center font-bold text-xl">Your cart</Text>
+            <Text className="text-center font-bold text-xl">Your cart {pushTokenData} </Text>
             <Text className="text-center text-gray-500">{pharmacy.title}</Text>
           </View>
         </View>
