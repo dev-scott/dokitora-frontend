@@ -28,6 +28,7 @@ import DoctorDetail from "../screens/Doctor/DoctorDetail";
 import DeliveryDetail from "../screens/OnlyDeliveryDrivers/DeliveryDetail";
 import OrderDetail from "../screens/Delivery/OrderDetail";
 import DoctorNote from "../screens/Doctor/DoctorNote";
+import DoctorAppointment from "../screens/Doctor/DoctorAppointment";
 
 const Stack = createStackNavigator();
 
@@ -137,6 +138,11 @@ const AppStack = () => {
           name="DoctorNote"
           options={{ presentation: "fullScreenModal", headerShown: false }}
           component={DoctorNote}
+        />
+        <Stack.Screen
+          name="DoctorAppointment"
+          options={{ presentation: "fullScreenModal", headerShown: false }}
+          component={DoctorAppointment}
         />
       </Stack.Navigator>
     </NavigationContainer>

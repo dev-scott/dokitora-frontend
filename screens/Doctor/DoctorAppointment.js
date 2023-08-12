@@ -1,3 +1,20 @@
+
+import {
+    Button,
+    Modal,
+    FormControl,
+    Input,
+    Radio,
+    Stack,
+    Center,
+    NativeBaseProvider,
+  } from "native-base";
+import LoadingOverlay from "../../components/UI/LoadingOverlay";
+import DateTimePicker from "../../components/UI/DateTimePicker";
+
+
+
+
 import { View, Text, Pressable, TextInput } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -14,7 +31,7 @@ import { assets } from "../../constants";
 import { useChatContext } from "stream-chat-expo";
 import MainInput from "../../components/UI/MainInput";
 
-const DoctorNote = ({ route }) => {
+const DoctorAppointment = ({ route }) => {
   const { client } = useChatContext();
 
   const { user } = route.params;
@@ -91,14 +108,15 @@ style={{
   }}
   className="text-gray-dark  text-[18px] "
 
->Le motif de rendez vous</Text>
+>Selectionner la date du rendez vous</Text>
 
-<TextInput multiline={true}  className="  mt-4 text-[12px] font-normal text-zin800 outline-none border border-gray-dark rounded-[4px]  h-full grow shrink basis-0 " />
+<DateTimePicker/>
+
 
       </View>
 
       <View className="flex flex-row">
-        <Pressable onPress={()=>navigation.navigate("DoctorAppointment" ,  {user:user})} className=" w-full mt-3 rounded-xl flex justify-center items-center   px-2 py-4 bg-primary ">
+        <Pressable className=" w-full mt-3 rounded-xl flex justify-center items-center   px-2 py-4 bg-primary ">
           <Text
             style={{
               fontFamily: "sharp-sans",
@@ -113,4 +131,4 @@ style={{
   );
 };
 
-export default DoctorNote;
+export default DoctorAppointment;
