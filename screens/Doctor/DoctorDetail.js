@@ -194,7 +194,7 @@ const DoctorDetail = ({ route }) => {
         </View>
       </View>
       <View className="flex flex-row">
-        <Pressable className=" w-[85%] mt-3 rounded-xl flex justify-center items-center   px-2 py-4 bg-primary ">
+        <Pressable onPress={()=>navigation.navigate("DoctorNote" , {user:user})} className=" w-[85%] mt-3 rounded-xl flex justify-center items-center   px-2 py-4 bg-primary ">
           <Text
             style={{
               fontFamily: "sharp-sans",

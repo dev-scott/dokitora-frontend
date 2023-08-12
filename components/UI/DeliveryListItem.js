@@ -1,71 +1,105 @@
 
-import { View, Text, Pressable } from "react-native";
-import { useChatContext } from "stream-chat-expo";
-// import { useRouter } from 'expo-router';
-import { useContext } from "react";
-import { AuthContext } from "../../store/AuthContext";
+
+
+import {
+  View,
+  Text,
+  Image,
+  TouchableWithoutFeedback,
+  TouchableOpacity,
+} from "react-native";
+import React, { useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { assets } from "../../constants";
+import { useDispatch, useSelector } from "react-redux";
+// import { selectmyOrder, setMyOrder } from "../../slices/orderSlice";
+import { Feather } from "@expo/vector-icons";
 
-const DeliveryListItem = ({ delivery }) => {
-  const { client } = useChatContext();
-
-  const authCtx = useContext(AuthContext);
-
-  //   const router = useRouter();
+const DeliveryListItem = ({
+  id,
+  name,
+  phone,
+  date,
+  email,
+  pharmacy_name,
+  order_price,
+  onder_confirm,
+  order_pharmacy_number,
+}) => {
   const navigation = useNavigation();
 
-  //   const startChannel = async () => {
-  //     const channel = client.channel('messaging', {
-  //       members: [user.id.toString(), authCtx.id.toString()],
-  //     });
-  //     await channel.watch();
+  // const orderTerst = useSelector(selectmyOrder)
 
-  //     // router.push(`/chat/channel/${channel.id}`);
-  //     navigation.navigate("ChannelDetail", {id: channel.id})
-  //   };
+  const dispatch = useDispatch();
 
-  const detailFunction = () => {
-    navigation.navigate("DeliveryDetail", { delivery: delivery });
+  const Valide = assets.Valide;
+  const Erreur = assets.Erreur;
+
+  const item = {
+    id,
+    name,
+    phone,
+    date,
+    email,
+    pharmacy_name,
+    order_price,
+    onder_confirm,
   };
 
-  const Doctor = assets.Doctor;
+  // useEffect(()=>{
+
+  //   if(item && item.id){
+
+  //       dispatch(setMyOrder({...item}))
+
+  //   }
+
+  // })
 
   return (
-    <Pressable
-      onPress={detailFunction}
-      style={{
-        backgroundColor: "white",
-        margin: 5,
-        marginVertical: 3,
-        padding: 10,
+    <TouchableOpacity
+      className=" flex flex-col justify-between items-center mr-6 bg-white w-full h-24 mb-3 p-3 rounded-[5px] shadow-lg"
+      onPress={() => {
+        navigation.navigate("OrderDetail", {
+          id,
+          name,
+          phone,
+          date,
+          email,
+          pharmacy_name,
+          order_price,
+          onder_confirm,
+          order_pharmacy_number,
+        });
       }}
-      className="rounded-[2px] flex flex-row "
     >
-      <View className="w-[20%]">
-        <View className="rounded-full w-[70px] h-[70px] bg-primary">
-          <Doctor height="100%" width="100%" />
+      <View className=" flex flex-row justify-between items-center w-full ">
+        <View className="flex flex-col">
+          <Text
+            style={{
+              fontFamily: "sharp-sans",
+            }}
+          >
+            {name}
+          </Text>
+          <Text>{date}</Text>
+        </View>
+        <View className="flex justify-center items-center flex-row ">
+          <Text className="text-green600">${order_price}</Text>
+          {/* <Text className="text-green600">${orderTerst.date}</Text> */}
+          {onder_confirm ? (
+            <Valide width={19} height={32} className="ml-2" />
+          ) : (
+            <Erreur width={19} height={32} className="ml-2" />
+          )}
         </View>
       </View>
-      <View className="px-5 w-[80%]">
-        <Text
-          style={{
-            fontFamily: "sharp-sans",
-          }}
-          className="text-[18px]"
-        >
-          {delivery.attributes.name}
-        </Text>
-        <Text
-          style={{
-            fontFamily: "sharp-sans",
-          }}
-          className="text-gray-dark"
-        >
-          {delivery.attributes.date}
-        </Text>
+
+      <View className="border-t-2 border-opacity-5 border-t-gray-dark w-full pt-1 flex flex-row items-center justify-between ">
+        <Text>{email}</Text>
+        <Feather name="arrow-right" size={20} color="#273444" />
       </View>
-    </Pressable>
+    </TouchableOpacity>
   );
 };
 
