@@ -1,18 +1,33 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { getToken } from "./helpers";
-const urlGetPharmacy ="http://192.168.1.105:1337/api/pharmacies?populate=medication.image&populate=image";
-const urlAddOrder = "http://192.168.1.105:1337/api/orders";
+const urlGetPharmacy ="http://192.168.1.102:1337/api/pharmacies?populate=medication.image&populate=image";
+const urlAddOrder = "http://192.168.1.102:1337/api/orders";
 
-const urlGetBlogs = "http://192.168.1.105:1337/api/blogs?populate=*";
+const urlGetBlogs = "http://192.168.1.102:1337/api/blogs?populate=*";
 
-const urlGetOrderByUser ="http://192.168.1.105:1337/api/orders/findOrderByUser";
+const urlGetOrderByUser ="http://192.168.1.102:1337/api/orders/findOrderByUser";
 
-const urlGetDoctorUsers = "http://192.168.1.105:1337/api/auth/getDoctorUser";
+const urlGetDoctorUsers = "http://192.168.1.102:1337/api/auth/getDoctorUser";
 
-const urlGetDeliveryPerson = "http://192.168.1.105:1337/api/auth/getDeliveryPerson"
+const urlGetDeliveryPerson = "http://192.168.1.102:1337/api/auth/getDeliveryPerson"
 
-const urlGetListDeliveries = "http://192.168.1.105:1337/api/orders?populate=*"
+const urlGetListDeliveries = "http://192.168.1.102:1337/api/orders?populate=*"
+
+
+
+// const urlGetPharmacy ="http://192.168.202.18:1337/api/pharmacies?populate=medication.image&populate=image";
+// const urlAddOrder = "http://192.168.202.18:1337/api/orders";
+
+// const urlGetBlogs = "http://192.168.202.18:1337/api/blogs?populate=*";
+
+// const urlGetOrderByUser ="http://192.168.202.18:1337/api/orders/findOrderByUser";
+
+// const urlGetDoctorUsers = "http://192.168.202.18:1337/api/auth/getDoctorUser";
+
+// const urlGetDeliveryPerson = "http://192.168.202.18:1337/api/auth/getDeliveryPerson"
+
+// const urlGetListDeliveries = "http://192.168.202.18c:1337/api/orders?populate=*"
 
 export async function getPharmacy() {
   const response = await axios.get(urlGetPharmacy);
