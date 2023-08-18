@@ -6,6 +6,12 @@ import { getPharmacy } from "../../utils/api";
 const FeaturedRow = ({ title, description, restaurants }) => {
   const [pharmacyData, setPharmacyData] = useState([]);
 
+  
+  const [pharmacyFilter , setPharmacyFilter] = useState([]);
+
+  const [search , setSearch]= useState('');
+
+
   useEffect(() => {
     getPharmacyData();
   }, []);
@@ -17,13 +23,34 @@ const FeaturedRow = ({ title, description, restaurants }) => {
 
     console.log(resp);
     setPharmacyData(resp);
+    setPharmacyFilter(resp)
   };
   // console.log(pharmacyData)
   // console.log(pharmacyData.attributes)
 
+
+  const searchFilter = (value)=>{
+
+    if(value){
+      const newData = orders.filter((item)=>{
+        const itemData = item.name ? item.name.toUpperCase() : ''.toUpperCase();
+        const valueData = value.toUpperCase();
+        return itemData.indexOf(valueData)>-1
+      });
+      setOrdersFilter(newData);
+      setSearch(value);
+    }else {
+      setOrdersFilter(orders);
+      setSearch(value)
+    }
+
+  }
+
+
+
   return (
     <View>
-      <View className="flex-row justify-between items-center ">
+      {/* <View className="flex-row justify-between items-center ">
         <View>
           <Text
             style={{
@@ -53,7 +80,7 @@ const FeaturedRow = ({ title, description, restaurants }) => {
             See All
           </Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
 
       <ScrollView
         horizontal
@@ -63,7 +90,7 @@ const FeaturedRow = ({ title, description, restaurants }) => {
         }}
         className="overflow-visible py-5"
       >
-        {pharmacyData.map((pharmacy) => {
+        {pharmacyFilter.map((pharmacy) => {
           return (
             <PharmacyCard
               key={pharmacy.id}
